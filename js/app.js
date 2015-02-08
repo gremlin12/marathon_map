@@ -1,8 +1,18 @@
  var locations = [
+     {
+     	name : "Marathon Library",
+     	latitude: 24.710633,
+     	longitude: -81.095606
 
-];
+     }
+ ];
+
+
+
 
 /* Map  */
+
+var mapViewModel = function() {
 
 var mapOptions = {
     zoom: 13,
@@ -18,13 +28,13 @@ var marker, i;
 
 for (i = 0; i < locations.length; i++) {
 	marker = new google.maps.Marker({
-		position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+		position: new google.maps.LatLng(locations[i].latitude, locations[i].longitude),
 		map: map
 	});
 
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
-          infowindow.setContent(locations[i][3]);
+          infowindow.setContent(locations[i].name);
           infowindow.open(map, marker);
         }
     })(marker, i));    
@@ -41,3 +51,4 @@ google.maps.event.addDomListener(window, 'resize', function() {
 	map.setCenter(center);
 });
 
+);
