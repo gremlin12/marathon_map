@@ -1,0 +1,18 @@
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#map-canvas {
+    display: block;
+    height: 400px;
+    width: 96%;
+}
+
+#map {
+    display: block;
+    height: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
