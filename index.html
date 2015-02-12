@@ -7,13 +7,11 @@
   <title>Marathon Map</title>
   <link href="css/style.css" rel="stylesheet">
 </head>
-<body>
+<body> 
+  <div id="map-canvas"></div>
   <ul data-bind="foreach: points">
     <li data-bind="text: name"></li>
   </ul>
- 
-  <div id="map-canvas"></div>
-
 
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UpkOItdYcObCcD9-pQ2tGBAkm7XjOPI"></script>
   <script src="js/knockout-3.2.0.js"></script>
