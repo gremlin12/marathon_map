@@ -24,7 +24,7 @@ var model = [
         cat : 'beaches'
      }   
 ];
-var markers =[];
+
 
 function Point(name, lat, long, cat) {
     this.name = ko.observable(name);
@@ -32,17 +32,8 @@ function Point(name, lat, long, cat) {
     this.long = ko.observable(long);
     this.cat = ko.observable(cat);
 
-    var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, long),
-        map: map
-    }); 
 
-    google.maps.event.addListener(marker, 'click', (function(marker) {
-        return function() {
-          infowindow.setContent(name);
-          infowindow.open(map, marker);
-        };
-    })(marker));
+    addMarkers(name,lat,long);
 }
 
 
@@ -51,17 +42,41 @@ var map = new google.maps.Map(document.getElementById('map-canvas'), {
     center: {lat: 24.726389, lng: -81.040278}
 });
 
+var markers = [];
+var marker;
+
+function addMarkers(name,lat,long) {
+    marker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, long),
+        name: name,
+        map : map
+    });
+
+        google.maps.event.addListener(marker, 'click', (function(marker) {
+        return function() {
+          infowindow.setContent(name);
+          infowindow.open(map, marker);
+        };
+    })(marker)); 
+    
+    markers.push(marker);
+};
+
 var infowindow = new google.maps.InfoWindow();
+
 
 
 
 var viewModel = function() {
     var self = this;
     points = ko.observableArray([]);
-    this.beaches = ko.observableArray([]);
+    //this.beaches = ko.observableArray([]);
 
     this.emptyPoints = function() {
-         markers = [];
+         for (item in markers){
+           markers[item].setMap(null);
+         }
+         markers.length = 0;  
          self.points.removeAll();
     };
     
@@ -69,9 +84,10 @@ var viewModel = function() {
         for (place in model) {
             if (model[place].cat === 'beaches') {
                 points.push(new Point(model[place].name, model[place].lat, model[place].long));
-            }    
+            } 
         }
     };
+
 
     this.getPlaces = function() {
         for (place in model) {
@@ -81,10 +97,7 @@ var viewModel = function() {
         }
     };
 
-   
-    /*for (var place in model) {
-        points.push(new Point(model[place].name, model[place].lat, model[place].long));
-    }  */
+
 };
 
 ko.applyBindings(viewModel());
