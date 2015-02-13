@@ -1,38 +1,36 @@
-var model = {
-
-  places : [    
+var model = [    
      {
         name : 'Marathon Library',
-        lat: 24.710633,
-        long: -81.095606
-
+        lat : 24.710633,
+        long : -81.095606,
+        cat : 'places'
      },
      {
         name : 'Marathon Community Park',
         lat : 24.711631,
-        long: -81.089487
-     }
-],
-
-  beaches  : [
+        long : -81.089487,
+        cat : 'places'
+     },
      {
         name : 'Sombrero Beach',
-        lat: 24.691533,
-        long: -81.086107
+        lat : 24.691533,
+        long : -81.086107,
+        cat : 'beaches'
      },
      {
         name : 'Coco Plum Beach',
         lat : 24.730240,
-        long : -81.001592
+        long : -81.001592,
+        cat : 'beaches'
      }   
+];
+var markers =[];
 
-]
-};
-
-function Point(name, lat, long) {
+function Point(name, lat, long, cat) {
     this.name = ko.observable(name);
     this.lat = ko.observable(lat);
     this.long = ko.observable(long);
+    this.cat = ko.observable(cat);
 
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, long),
@@ -55,15 +53,39 @@ var map = new google.maps.Map(document.getElementById('map-canvas'), {
 
 var infowindow = new google.maps.InfoWindow();
 
-var currentList = model.places;
+
 
 var viewModel = function() {
     var self = this;
-
     points = ko.observableArray([]);
-    for (var place in currentList) {
-        points.push(new Point(currentList[place].name, currentList[place].lat, currentList[place].long));
-    }  
+    this.beaches = ko.observableArray([]);
+
+    this.emptyPoints = function() {
+         markers = [];
+         self.points.removeAll();
+    };
+    
+    this.getBeaches = function(){
+        for (place in model) {
+            if (model[place].cat === 'beaches') {
+                points.push(new Point(model[place].name, model[place].lat, model[place].long));
+            }    
+        }
+    };
+
+    this.getPlaces = function() {
+        for (place in model) {
+            if (model[place].cat === 'places') {
+                points.push(new Point(model[place].name, model[place].lat, model[place].long));
+            }    
+        }
+    };
+
+   
+    /*for (var place in model) {
+        points.push(new Point(model[place].name, model[place].lat, model[place].long));
+    }  */
 };
 
 ko.applyBindings(viewModel());
+
