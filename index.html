@@ -13,8 +13,9 @@
     <button type="button" data-bind="click: searchPlaces()"> Search </button>
     </form>
   <ul>
-    <li data-bind="click: function(){emptyPoints(), getBeaches()}">Beaches</li>
-    <li data-bind="click: function(){emptyPoints(), getPlaces()}">Places</li>
+    <li data-bind="click: function(){emptyPoints(), getPlaces('beaches')}">Beaches</li>
+    <li data-bind="click: function(){emptyPoints(), getPlaces('places')}">Places</li>
+    <li data-bind="click: function(){emptyPoints(), getPlaces('parks')}">Parks</li>
   </ul> 
   <div id="map-canvas"></div>
   <ul data-bind="foreach: points">

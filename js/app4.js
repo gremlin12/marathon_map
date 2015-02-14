@@ -3,25 +3,25 @@ var model = [
         name : 'Marathon Library',
         lat : 24.710633,
         long : -81.095606,
-        cat : 'places'
+        cat : ['places']
      },
      {
         name : 'Marathon Community Park',
         lat : 24.711631,
         long : -81.089487,
-        cat : 'places'
+        cat : ['places','parks']
      },
      {
         name : 'Sombrero Beach',
         lat : 24.691533,
         long : -81.086107,
-        cat : 'beaches'
+        cat : ['beaches','parks']
      },
      {
         name : 'Coco Plum Beach',
         lat : 24.730240,
         long : -81.001592,
-        cat : 'beaches'
+        cat : ['beaches', 'parks']
      }   
 ];
 
@@ -80,21 +80,14 @@ var viewModel = function() {
          self.points.removeAll();
     };
     
-    this.getBeaches = function(){
+    this.getPlaces = function(category){
         for (var place in model) {
-            if (model[place].cat === 'beaches') {
-                points.push(new Point(model[place].name, model[place].lat, model[place].long));
-            } 
-        }
-    };
-
-
-    this.getPlaces = function() {
-        for (var place in model) {
-            if (model[place].cat === 'places') {
-                points.push(new Point(model[place].name, model[place].lat, model[place].long));
-            }    
-        }
+            for(i=0; i < model[place].cat.length; i++) {
+                if (model[place].cat[i] ===category) {
+                       points.push(new Point(model[place].name, model[place].lat, model[place].long));
+                }
+            }           
+        }    
     };
 
     this.searchPlaces = function(query) {
