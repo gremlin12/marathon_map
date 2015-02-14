@@ -60,7 +60,7 @@ function addMarkers(name,lat,long) {
     })(marker)); 
     
     markers.push(marker);
-};
+}
 
 var infowindow = new google.maps.InfoWindow();
 
@@ -70,10 +70,10 @@ var infowindow = new google.maps.InfoWindow();
 var viewModel = function() {
     var self = this;
     points = ko.observableArray([]);
-    //this.beaches = ko.observableArray([]);
+    this.query = ko.observable('');
 
     this.emptyPoints = function() {
-         for (item in markers){
+         for (var item in markers){
            markers[item].setMap(null);
          }
          markers.length = 0;  
@@ -81,7 +81,7 @@ var viewModel = function() {
     };
     
     this.getBeaches = function(){
-        for (place in model) {
+        for (var place in model) {
             if (model[place].cat === 'beaches') {
                 points.push(new Point(model[place].name, model[place].lat, model[place].long));
             } 
@@ -90,15 +90,39 @@ var viewModel = function() {
 
 
     this.getPlaces = function() {
-        for (place in model) {
+        for (var place in model) {
             if (model[place].cat === 'places') {
                 points.push(new Point(model[place].name, model[place].lat, model[place].long));
             }    
         }
     };
 
+    this.searchPlaces = function(query) {
+        var search = this.query().toLowerCase();
+        for(var place in model) {
+            if (model[place].name.toLowerCase() === search) {
+                self.emptyPoints();
+                points.push(new Point(model[place].name, model[place].lat, model[place].long));
+            }
+        }
+    };
 
+    // The following fix is from Steve Michelotti's blog
+
+    this.searchOnEnter = function() {
+        var keyCode = (event.which ? event.which : event.keyCode);
+            if (keyCode === 13) {
+                this.searchPlaces();
+                return false;
+            }
+            return true;
+    };
 };
 
 ko.applyBindings(viewModel());
+
+
+
+
+
 

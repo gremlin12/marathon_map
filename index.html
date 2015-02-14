@@ -8,7 +8,10 @@
   <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-  <input placeholder="Search…" type="search" autocomplete="off">
+    <form>
+    <input type="search" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup', event: {keypress: searchOnEnter}">
+    <button type="button" data-bind="click: searchPlaces()"> Search </button>
+    </form>
   <ul>
     <li data-bind="click: function(){emptyPoints(), getBeaches()}">Beaches</li>
     <li data-bind="click: function(){emptyPoints(), getPlaces()}">Places</li>
