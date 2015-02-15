@@ -80,6 +80,7 @@ var viewModel = function() {
     this.query = ko.observable('');
 
     this.emptyPoints = function() {
+    	 $('#wiki-elem').remove();
          for (var item in markers){
            markers[item].setMap(null);
          }
@@ -118,6 +119,10 @@ var viewModel = function() {
             return true;
     };
 
+    this.removeWiki = function() {
+    	$('#wiki-elem').remove();
+    };
+
     this.getWiki = function(name) {
     	$wikiElem = $('#wikipedia-links');
     	var searchTerm = '';   	
@@ -132,16 +137,12 @@ var viewModel = function() {
                             for (var i=0; i < articleList.length; i++) {
     			                articleStr = articleList[i];
     			                var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-    			                $wikiElem.append('<li><a href="' + url + '">' + articleStr + '</a></li>');
+    			                $wikiElem.append('<li id="wiki-elem"><a href="' + url + '">' + articleStr + '</a></li>');
     			                var contentString = name() + '<p><a href="' + url + '">' + articleStr + '</a></p>'
     		                };
     		        }
                 });
-
-                
-         
-    	
-
+        
     }; 
 
 };  
