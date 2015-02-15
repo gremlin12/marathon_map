@@ -13,13 +13,13 @@
     <button type="button" data-bind="click: searchPlaces()"> Search </button>
     </form>
   <ul>
-    <li data-bind="click: function(){emptyPoints(), getPlaces('beaches')}">Beaches</li>
-    <li data-bind="click: function(){emptyPoints(), getPlaces('places')}">Places</li>
-    <li data-bind="click: function(){emptyPoints(), getPlaces('parks')}">Parks</li>
+    <li data-bind="click: function(){emptyPoints(), getPlaces('beaches'),closeInfoWindow()}">Beaches</li>
+    <li data-bind="click: function(){emptyPoints(), getPlaces('places'), closeInfoWindow()}">Places</li>
+    <li data-bind="click: function(){emptyPoints(), getPlaces('parks'), closeInfoWindow()}">Parks</li>
   </ul> 
   <div id="map-canvas"></div>
   <ul data-bind="foreach: points">
-    <li data-bind="text: name, click: function(){removeWiki(), getWiki(name)}"></li>
+    <li data-bind="text: name, click: function(){removeWiki(), getWiki(name), closeInfoWindow(),openInfoWindow(name)}"></li>
   </ul>
   <div id="wikipedia-links"></div>
 

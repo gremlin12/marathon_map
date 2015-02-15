@@ -52,6 +52,7 @@ var map = new google.maps.Map(document.getElementById('map-canvas'), {
 
 var markers = [];
 var marker;
+var infoWindowIsOpen = false;
 
 function addMarkers(name,lat,long,cat) {
     marker = new google.maps.Marker({
@@ -65,6 +66,7 @@ function addMarkers(name,lat,long,cat) {
         return function() {
           infowindow.setContent(name);
           infowindow.open(map, marker);
+          infoWindowIsOpen = true;
         };
     })(marker)); 
     
@@ -92,7 +94,7 @@ var viewModel = function() {
         for (var place in model) {
             for(i=0; i < model[place].cat.length; i++) {
                 if (model[place].cat[i] ===category) {
-                    points.push(new Point(model[place].name, model[place].lat, model[place].long, model[place].yelpId) );
+                    points.push(new Point(model[place].name, model[place].lat, model[place].long, model[place].cat) );
                 }
             }           
         }    
@@ -119,6 +121,28 @@ var viewModel = function() {
             return true;
     };
 
+    this.closeInfoWindow = function() {
+    	if (infoWindowIsOpen === true) {
+    		infowindow.close();
+    	}
+    	infoWindowIsOpen = false;
+    };
+
+    this.openInfoWindow = function(name) {
+    	for (place in model) {
+    		if (model[place].name === name()) {
+    			var currentLat = model[place].lat;
+    			var currentLong = model[place].long;
+    			var currentName = model[place].name;
+    		}
+    	}
+  
+        infowindow.setPosition({lat: currentLat, lng: currentLong});
+        infowindow.setContent(currentName);
+        infowindow.open(map);
+        infoWindowIsOpen = true; 
+    };
+
     this.removeWiki = function() {
     	$('#wiki-elem').remove();
     };
@@ -134,12 +158,29 @@ var viewModel = function() {
                 	dataType: 'jsonp',
                 	success: function(response) {
                         var articleList = response[1];
-                            for (var i=0; i < articleList.length; i++) {
-    			                articleStr = articleList[i];
-    			                var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-    			                $wikiElem.append('<li id="wiki-elem"><a href="' + url + '">' + articleStr + '</a></li>');
-    			                var contentString = name() + '<p><a href="' + url + '">' + articleStr + '</a></p>'
-    		                };
+                            if (articleList.length === 0) {
+                            	self.openInfoWindow();
+                            } else {
+
+                                for (var i=0; i < articleList.length; i++) {
+    			                    articleStr = articleList[i];
+    			                    var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+    			                    $wikiElem.append('<li id="wiki-elem"><a href="' + url + '">' + articleStr + '</a></li>');
+    			                    var contentString = name() + '<p><a href="' + url + '">' + articleStr + '</a></p>'
+    		                    };
+    		                    for (place in model) {
+    		                        if (model[place].name === name()) {
+    			                        var currentLat = model[place].lat;
+    			                        var currentLong = model[place].long;
+    			                        var currentName = model[place].name;
+    		                        }
+    	                        }
+  
+                                infowindow.setPosition({lat: currentLat, lng: currentLong});
+                                infowindow.setContent(contentString);
+                                infowindow.open(map);
+                                infoWindowIsOpen = true; 
+    		                }
     		        }
                 });
         
