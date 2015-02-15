@@ -16,24 +16,32 @@ var model = [
         lat : 24.691533,
         long : -81.086107,
         cat : ['beaches','parks']
+
      },
      {
         name : 'Coco Plum Beach',
         lat : 24.730240,
         long : -81.001592,
         cat : ['beaches', 'parks']
+     },
+     {
+     	name : 'Dolphin Research Center',
+     	lat: 24.766999,
+     	long : -80.945549,
+     	cat : ['places']
      }   
 ];
 
 
-function Point(name, lat, long, cat) {
+function Point(name, lat, long, cat, yelpId) {
     this.name = ko.observable(name);
     this.lat = ko.observable(lat);
     this.long = ko.observable(long);
     this.cat = ko.observable(cat);
+    this.yelpId = ko.observable(yelpId);
 
 
-    addMarkers(name,lat,long);
+    addMarkers(name,lat,long,cat,yelpId);
 }
 
 
@@ -45,11 +53,12 @@ var map = new google.maps.Map(document.getElementById('map-canvas'), {
 var markers = [];
 var marker;
 
-function addMarkers(name,lat,long) {
+function addMarkers(name,lat,long,cat) {
     marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, long),
         name: name,
-        map : map
+        map : map,
+        cat : cat
     });
 
         google.maps.event.addListener(marker, 'click', (function(marker) {
@@ -63,8 +72,6 @@ function addMarkers(name,lat,long) {
 }
 
 var infowindow = new google.maps.InfoWindow();
-
-
 
 
 var viewModel = function() {
@@ -84,7 +91,7 @@ var viewModel = function() {
         for (var place in model) {
             for(i=0; i < model[place].cat.length; i++) {
                 if (model[place].cat[i] ===category) {
-                       points.push(new Point(model[place].name, model[place].lat, model[place].long));
+                    points.push(new Point(model[place].name, model[place].lat, model[place].long, model[place].yelpId) );
                 }
             }           
         }    
@@ -110,7 +117,35 @@ var viewModel = function() {
             }
             return true;
     };
-};
+
+    this.getWiki = function(name) {
+    	$wikiElem = $('#wikipedia-links');
+    	var searchTerm = '';   	
+    			searchTerm = name().toLowerCase();
+                var wikiString = 'http://en.wikipedia.org/w/api.php?action=opensearch&search='+ encodeURIComponent(searchTerm) +'&format=json&callback=wikiCallback';
+
+                $.ajax({
+                	url: wikiString,
+                	dataType: 'jsonp',
+                	success: function(response) {
+                        var articleList = response[1];
+                            for (var i=0; i < articleList.length; i++) {
+    			                articleStr = articleList[i];
+    			                var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+    			                $wikiElem.append('<li><a href="' + url + '">' + articleStr + '</a></li>');
+    			                var contentString = name() + '<p><a href="' + url + '">' + articleStr + '</a></p>'
+    		                };
+    		        }
+                });
+
+                
+         
+    	
+
+    }; 
+
+};  
+
 
 ko.applyBindings(viewModel());
 
