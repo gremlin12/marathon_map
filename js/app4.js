@@ -70,7 +70,7 @@ function addMarkers(name,lat,long,cat) {
         };
     })(marker)); 
     
-    markers.push(marker);
+    markers.push(name);
 }
 
 var infowindow = new google.maps.InfoWindow();
@@ -148,10 +148,20 @@ var viewModel = function() {
     };
 
     this.getWiki = function(name) {
-    	$wikiElem = $('#wikipedia-links');
-    	var searchTerm = '';   	
-    			searchTerm = name().toLowerCase();
-                var wikiString = 'http://en.wikipedia.org/w/api.php?action=opensearch&search='+ encodeURIComponent(searchTerm) +'&format=json&callback=wikiCallback';
+        var contentString = '';
+        var linkString = '';
+    	$wikiElem = $('#wikipedia-links');  	
+    	var searchTerm = name();
+        var wikiString = 'http://en.wikipedia.org/w/api.php?action=opensearch&search='+ encodeURIComponent(searchTerm) +'&format=json&callback=wikiCallback';
+        var wikiExtractString = 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts|images&format=json&exsentences=5&exlimit=1&titles=' + encodeURIComponent(searchTerm);
+            $.ajax({
+                url: wikiExtractString,
+                dataType: 'jsonp',
+                success: function(response) {
+                    console.log(response);
+                    contentString = '<p>'+response.query.pages['10644323']['title']+'</p>' + response.query.pages['10644323'].extract;
+                }
+            })
 
                 $.ajax({
                 	url: wikiString,
@@ -159,15 +169,16 @@ var viewModel = function() {
                 	success: function(response) {
                         var articleList = response[1];
                             if (articleList.length === 0) {
-                            	self.openInfoWindow();
+                            	self.openInfoWindow(name);
                             } else {
 
                                 for (var i=0; i < articleList.length; i++) {
     			                    articleStr = articleList[i];
     			                    var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-    			                    $wikiElem.append('<li id="wiki-elem"><a href="' + url + '">' + articleStr + '</a></li>');
-    			                    var contentString = name() + '<p><a href="' + url + '">' + articleStr + '</a></p>'
+    			                    linkString =  '<p>Learn more about <a href="' + url + '">' + articleStr + '</a></p>'
     		                    };
+                                
+
     		                    for (place in model) {
     		                        if (model[place].name === name()) {
     			                        var currentLat = model[place].lat;
@@ -177,10 +188,11 @@ var viewModel = function() {
     	                        }
   
                                 infowindow.setPosition({lat: currentLat, lng: currentLong});
-                                infowindow.setContent(contentString);
+                                infowindow.setContent(contentString + linkString);
                                 infowindow.open(map);
                                 infoWindowIsOpen = true; 
-    		                }
+    		                } 
+
     		        }
                 });
         
@@ -194,5 +206,5 @@ ko.applyBindings(viewModel());
 
 
 
-
+//http://en.wikipedia.org/w/api.php?action=query&prop=images&format=json&imlimit=5&titles=Dolphin%20Research%20Center
 
