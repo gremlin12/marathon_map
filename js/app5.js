@@ -16,7 +16,6 @@ var model = [
         lat : 24.691533,
         long : -81.086107,
         cat : ['beaches','parks']
-
      },
      {
         name : 'Coco Plum Beach',
@@ -29,19 +28,24 @@ var model = [
      	lat: 24.766999,
      	long : -80.945549,
      	cat : ['places']
-     }   
+     },
+     {
+        name : 'Duck Key',
+        lat : 24.775669,
+        long : -80.912247,
+        cat : ['places']
+     }  
 ];
 
 
-function Point(name, lat, long, cat, yelpId) {
+function Point(name, lat, long, cat) {
     this.name = ko.observable(name);
     this.lat = ko.observable(lat);
     this.long = ko.observable(long);
     this.cat = ko.observable(cat);
-    this.yelpId = ko.observable(yelpId);
 
 
-    addMarkers(name,lat,long,cat,yelpId);
+    addMarkers(name,lat,long,cat);
 }
 
 
@@ -62,7 +66,7 @@ function addMarkers(name,lat,long,cat) {
         cat : cat
     });
 
-        google.maps.event.addListener(marker, 'click', (function(marker) {
+    google.maps.event.addListener(marker, 'click', (function(marker) {
         return function() {
           infowindow.setContent(name);
           infowindow.open(map, marker);
@@ -82,9 +86,9 @@ var viewModel = function() {
     this.query = ko.observable('');
 
     this.emptyPoints = function() {
-    	 $('#wiki-elem').remove();
-         for (var item in markers){
-           markers[item].setMap(null);
+    	// $('#wiki-elem').remove();
+         for (var i=0; i< markers.length; i++){
+           markers[i].setMap(null);
          }
          markers.length = 0;  
          self.points.removeAll();
@@ -129,8 +133,8 @@ var viewModel = function() {
     };
 
     this.openInfoWindow = function(name) {
-    	for (var place in model) {
-    		if (model[place].name === name) {
+    	for (place in model) {
+    		if (model[place].name === name()) {
     			var currentLat = model[place].lat;
     			var currentLong = model[place].long;
     			var currentName = model[place].name;
@@ -148,26 +152,59 @@ var viewModel = function() {
     };
 
     this.getWiki = function(name) {
-    	$wikiElem = $('#wikipedia-links');
-    	var searchTerm = '';   	
-    			searchTerm = name().toLowerCase();
-                var wikiString = 'http://en.wikipedia.org/w/api.php?action=opensearch&search='+ encodeURIComponent(searchTerm) +'&format=json&callback=wikiCallback';
+        var contentString = '';
+        var linkString = '';
+    	$wikiElem = $('#wikipedia-links');  	
+    	var searchTerm = name();
+        //var wikiString = 'http://en.wikipedia.org/w/api.php?action=opensearch&search='+ encodeURIComponent(searchTerm) +'&format=json&callback=wikiCallback';
+        var wikiString = 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts|images|info&rvprop=content&format=json&inprop=url&exsentences=5&exlimit=3&exsentences=20&titles=' + encodeURIComponent(searchTerm);
+            $.ajax({
+                url: wikiString,
+                dataType: 'jsonp',
+                success: function(response) {
+                    console.log(response);
+                    for (key in response.query.pages) {
+                        if (response.query.pages[key].missing === '') {
+                           self.openInfoWindow(name);
+                           console.log('something happened');
+                        }                   
+                        else {
+                            contentString = '<p>'+response.query.pages[key]['title']+'</p>' + response.query.pages[key].extract;
+                            linkString =  '<p>Learn more about <a href="' +  response.query.pages[key].fullurl+'">'+name()+'</a></p>';
 
-                $.ajax({
+                            for (place in model) {
+                                if (model[place].name === name()) {
+                                    var currentLat = model[place].lat;
+                                    var currentLong = model[place].long;
+                                    var currentName = model[place].name;
+                                }
+                            }
+  
+                            infowindow.setPosition({lat: currentLat, lng: currentLong});
+                            infowindow.setContent(contentString + linkString);
+                            infowindow.open(map);
+                            infoWindowIsOpen = true;  
+                        }
+                    }
+                }    
+            })
+
+               /* $.ajax({
                 	url: wikiString,
                 	dataType: 'jsonp',
                 	success: function(response) {
                         var articleList = response[1];
                             if (articleList.length === 0) {
-                            	self.openInfoWindow();
+                            	self.openInfoWindow(name);
                             } else {
 
                                 for (var i=0; i < articleList.length; i++) {
     			                    articleStr = articleList[i];
     			                    var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-    			                    $wikiElem.append('<li id="wiki-elem"><a href="' + url + '">' + articleStr + '</a></li>');
-    			                    var contentString = name() + '<p><a href="' + url + '">' + articleStr + '</a></p>'
+    			                    linkString =  '<p>Learn more about <a href="' + url + '">' + articleStr + '</a></p>'
     		                    };
+                                
+
     		                    for (place in model) {
     		                        if (model[place].name === name()) {
     			                        var currentLat = model[place].lat;
@@ -177,12 +214,13 @@ var viewModel = function() {
     	                        }
   
                                 infowindow.setPosition({lat: currentLat, lng: currentLong});
-                                infowindow.setContent(contentString);
+                                infowindow.setContent(contentString + linkString);
                                 infowindow.open(map);
                                 infoWindowIsOpen = true; 
-    		                }
+    		                } 
+
     		        }
-                });
+                });  */
         
     }; 
 
@@ -194,5 +232,5 @@ ko.applyBindings(viewModel());
 
 
 
-
+//http://en.wikipedia.org/w/api.php?action=query&prop=images&format=json&imlimit=5&titles=Dolphin%20Research%20Center
 
