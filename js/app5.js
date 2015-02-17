@@ -73,6 +73,7 @@ function addMarkers(name,lat,long,cat) {
           infoWindowIsOpen = true;
         };
     })(marker)); 
+
     
     markers.push(marker);
 }
