@@ -69,6 +69,7 @@ function addMarkers(name,lat,long,cat) {
     google.maps.event.addListener(marker, 'click', (function(marker) {
         return function() {
           infowindow.setContent(name);
+          infowindow.setOptions({pixelOffset: new google.maps.Size(0,0)});
           infowindow.open(map, marker);
           infoWindowIsOpen = true;
         };
@@ -78,7 +79,7 @@ function addMarkers(name,lat,long,cat) {
     markers.push(marker);
 }
 
-var infowindow = new google.maps.InfoWindow();
+var infowindow = new google.maps.InfoWindow(); 
 
 
 var viewModel = function() {
@@ -144,8 +145,13 @@ var viewModel = function() {
   
         infowindow.setPosition({lat: currentLat, lng: currentLong});
         infowindow.setContent(currentName);
+        infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
         infowindow.open(map);
         infoWindowIsOpen = true; 
+    };
+
+    this.testContent = function() {
+        return 'this is a test';
     };
 
     this.removeWiki = function() {
@@ -180,11 +186,13 @@ var viewModel = function() {
                                     var currentName = model[place].name;
                                 }
                             }
-  
+ 
                             infowindow.setPosition({lat: currentLat, lng: currentLong});
                             infowindow.setContent(contentString + linkString);
+                            infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
                             infowindow.open(map);
-                            infoWindowIsOpen = true;  
+                            infoWindowIsOpen = true; 
+                            
                         }
                     }
                 }    
