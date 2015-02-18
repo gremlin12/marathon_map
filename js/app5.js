@@ -106,6 +106,10 @@ var viewModel = function() {
         }    
     };
 
+    this.recenterMap = function() {
+        map.setOptions({'center':{lat: 24.726389, lng: -81.040278}});
+    };
+
 
     this.searchPlaces = function(query) {
         var search = this.query().toLowerCase();
@@ -155,9 +159,6 @@ var viewModel = function() {
     	$('#wiki-elem').remove();
     };
 
-    this.justTestingToo = function(name) {
-        infowindow.setContent('my name is ' + name);
-    };
 
     this.getWikiFromMarker = function(name) {
         var contentString = '';
@@ -221,43 +222,7 @@ var viewModel = function() {
                 }
             })
     };    
-        //    })
-
-               /* $.ajax({
-                	url: wikiString,
-                	dataType: 'jsonp',
-                	success: function(response) {
-                        var articleList = response[1];
-                            if (articleList.length === 0) {
-                            	self.openInfoWindow(name);
-                            } else {
-
-                                for (var i=0; i < articleList.length; i++) {
-    			                    articleStr = articleList[i];
-    			                    var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-    			                    linkString =  '<p>Learn more about <a href="' + url + '">' + articleStr + '</a></p>'
-    		                    };
-                                
-
-    		                    for (place in model) {
-    		                        if (model[place].name === name()) {
-    			                        var currentLat = model[place].lat;
-    			                        var currentLong = model[place].long;
-    			                        var currentName = model[place].name;
-    		                        }
-    	                        }
-  
-                                infowindow.setPosition({lat: currentLat, lng: currentLong});
-                                infowindow.setContent(contentString + linkString);
-                                infowindow.open(map);
-                                infoWindowIsOpen = true; 
-    		                } 
-
-    		        }
-                });  */
-        
-     
-
+       
 };  
 
 
@@ -265,6 +230,4 @@ ko.applyBindings(viewModel());
 
 
 
-
-//http://en.wikipedia.org/w/api.php?action=query&prop=images&format=json&imlimit=5&titles=Dolphin%20Research%20Center
 

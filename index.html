@@ -13,9 +13,9 @@
     <button type="button" data-bind="click: searchPlaces()"> Search </button>
     </form>
   <ul>
-    <li data-bind="click: function(){emptyPoints(), getPlaces('beaches'),closeInfoWindow()}">Beaches</li>
-    <li data-bind="click: function(){emptyPoints(), getPlaces('places'), closeInfoWindow()}">Places</li>
-    <li data-bind="click: function(){emptyPoints(), getPlaces('parks'), closeInfoWindow()}">Parks</li>
+    <li data-bind="click: function(){emptyPoints(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}">Beaches</li>
+    <li data-bind="click: function(){emptyPoints(), getPlaces('places'), closeInfoWindow(),recenterMap()}">Places</li>
+    <li data-bind="click: function(){emptyPoints(), getPlaces('parks'), closeInfoWindow(),recenterMap()}">Parks</li>
   </ul> 
   <div id="map-canvas"></div>
   <ul data-bind="foreach: points">
