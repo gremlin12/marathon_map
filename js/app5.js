@@ -45,7 +45,7 @@ function Point(name, lat, long, cat) {
     this.cat = ko.observable(cat);
 
 
-    addMarkers(name,lat,long,cat);
+    addMarkers(name, lat, long, cat);
 }
 
 
@@ -68,8 +68,8 @@ function addMarkers(name,lat,long,cat) {
 
     google.maps.event.addListener(marker, 'click', (function(marker) {
         return function() {
-          infowindow.setContent(name);
-          infowindow.setOptions({pixelOffset: new google.maps.Size(0,0)});
+          getWikiFromMarker(name);  
+          infowindow.setOptions({pixelOffset : new google.maps.Size(0,0)});
           infowindow.open(map, marker);
           infoWindowIsOpen = true;
         };
@@ -79,7 +79,7 @@ function addMarkers(name,lat,long,cat) {
     markers.push(marker);
 }
 
-var infowindow = new google.maps.InfoWindow(); 
+var infowindow = new google.maps.InfoWindow();
 
 
 var viewModel = function() {
@@ -105,6 +105,7 @@ var viewModel = function() {
             }           
         }    
     };
+
 
     this.searchPlaces = function(query) {
         var search = this.query().toLowerCase();
@@ -144,36 +145,60 @@ var viewModel = function() {
     	}
   
         infowindow.setPosition({lat: currentLat, lng: currentLong});
+        infowindow.setOptions({pixelOffset : new google.maps.Size(0,-35)});
         infowindow.setContent(currentName);
-        infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
         infowindow.open(map);
         infoWindowIsOpen = true; 
-    };
-
-    this.testContent = function() {
-        return 'this is a test';
     };
 
     this.removeWiki = function() {
     	$('#wiki-elem').remove();
     };
 
-    this.getWiki = function(name) {
+    this.justTestingToo = function(name) {
+        infowindow.setContent('my name is ' + name);
+    };
+
+    this.getWikiFromMarker = function(name) {
         var contentString = '';
         var linkString = '';
-    	$wikiElem = $('#wikipedia-links');  	
-    	var searchTerm = name();
-        //var wikiString = 'http://en.wikipedia.org/w/api.php?action=opensearch&search='+ encodeURIComponent(searchTerm) +'&format=json&callback=wikiCallback';
+        var searchTerm = name;
         var wikiString = 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts|images|info&rvprop=content&format=json&inprop=url&exsentences=5&exlimit=3&exsentences=20&titles=' + encodeURIComponent(searchTerm);
             $.ajax({
                 url: wikiString,
                 dataType: 'jsonp',
-                success: function(response) {
-                    console.log(response);
+                success: function(response) {    
+                     for (var key in response.query.pages) {
+                        if (response.query.pages[key].missing === '') {
+                           infowindow.setContent(name);
+                        }                   
+                        else { 
+                            contentString = '<p>'+response.query.pages[key]['title']+'</p>' + response.query.pages[key].extract;
+                            linkString =  '<p>Learn more about <a href="' +  response.query.pages[key].fullurl+'">'+name+'</a></p>';
+                            
+                            infowindow.setContent(contentString + linkString);
+
+                       }
+                    }
+                }
+            })       
+    };
+
+    this.getWiki = function(name) {
+
+        var contentString = '';
+        var linkString = '';
+        var searchTerm = name();
+        
+        var wikiString = 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts|images|info&rvprop=content&format=json&inprop=url&exsentences=5&exlimit=3&exsentences=20&titles=' + encodeURIComponent(searchTerm);
+            $.ajax({
+                url: wikiString,
+                dataType: 'jsonp',
+                success: function(response) {            
+    	
                     for (key in response.query.pages) {
                         if (response.query.pages[key].missing === '') {
                            self.openInfoWindow(name);
-                           console.log('something happened');
                         }                   
                         else {
                             contentString = '<p>'+response.query.pages[key]['title']+'</p>' + response.query.pages[key].extract;
@@ -186,17 +211,17 @@ var viewModel = function() {
                                     var currentName = model[place].name;
                                 }
                             }
- 
+
                             infowindow.setPosition({lat: currentLat, lng: currentLong});
                             infowindow.setContent(contentString + linkString);
-                            infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
                             infowindow.open(map);
-                            infoWindowIsOpen = true; 
-                            
+                            infoWindowIsOpen = true;  
                         }
                     }
-                }    
+                }
             })
+    };    
+        //    })
 
                /* $.ajax({
                 	url: wikiString,
@@ -231,7 +256,7 @@ var viewModel = function() {
     		        }
                 });  */
         
-    }; 
+     
 
 };  
 
