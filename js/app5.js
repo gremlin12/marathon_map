@@ -71,8 +71,8 @@ function Point(name, lat, long, cat, address, imgUrl) {
 
 
 var map = new google.maps.Map(document.getElementById('map-canvas'), {
-    zoom: 12,
-    center: {lat: 24.726389, lng: -81.040278}
+    zoom: 13,
+    center: {lat: 24.723009, lng: -81.058884}
 });
 
 var markers = [];
@@ -88,49 +88,61 @@ function initialize(category) {
 
     var request = {
         location: map.center,
-        radius: '5000',
+        radius: '25000',
         types: [category]
     };
     service.nearbySearch(request, callback);
 
-function callback(results, status) {
-    
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      var place = results[i];
-      createMarker(results[i]);
+    function callback(results, status) {   
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+                var place = results[i];
+                createMarker(results[i]);
+            }
+        }
     }
-  }
+
+    function createMarker(place) {
+        var name = place.name;
+        var lat = place.geometry.location.lat();
+        var long = place.geometry.location.lng();
+        var address = place.vicinity;
+        var cat = request.types;
+        var imgUrl = '';
+        var placeid = place.place_id;
+
+        if (place.hasOwnProperty('photos') ) {
+            imgUrl = place.photos[0].getUrl({'maxWidth':100, 'maxHeight':100});
+        }
+
+        points.push(new Point(name,lat,long,cat,address,imgUrl,placeid));
+
+
+        var obj = {
+            name : name,
+            lat : lat,
+            long : long,
+            cat : cat,
+            address : address,
+            imgUrl : imgUrl
+        }
+
+        model.push(obj);
+        getPlaceDetails(placeid);
+    }
 }
 
-function createMarker(place) {
-  var name = place.name;
-  var lat = place.geometry.location.lat();
-  var long = place.geometry.location.lng();
-  var address = place.vicinity;
-  var cat = request.types;
-  var imgUrl = '';
-
-  if (place.hasOwnProperty('photos') ) {
-      imgUrl = place.photos[0].getUrl({'maxWidth':100, 'maxHeight':100});
-     //console.log(place.photos[0].getUrl({'maxWidth' : 100, 'maxHeight' : 100}));
-  }
-
-  points.push(new Point(name,lat,long,cat,address,imgUrl));
-
-
-  var obj = {
-    name : name,
-    lat : lat,
-    long : long,
-    cat : cat,
-    address : address,
-    imgUrl : imgUrl
-  }
-
-  model.push(obj);
-}
-}
+function getPlaceDetails(placeid) {
+    var request = {
+        placeId : placeid
+    }
+    service.getDetails(request, callback);
+    function callback(place, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            console.log(place);
+        }
+    }
+}    
 
 function addMarkers(name,lat,long,cat,address,imgUrl) {
     marker = new google.maps.Marker({
@@ -145,7 +157,6 @@ function addMarkers(name,lat,long,cat,address,imgUrl) {
     google.maps.event.addListener(marker, 'click', (function(marker) {
         return function() {
           //getWikiFromMarker(name);
-          console.log(imgUrl); 
           var content = '<p>' + name + '</p><img src="' +imgUrl + '"><p>'+address+'</p>'; 
           infowindow.setContent(content);
           infowindow.setOptions({pixelOffset : new google.maps.Size(0,0)});
@@ -194,8 +205,8 @@ var viewModel = function() {
     this.recenterMap = function() {
         map.setOptions(
             {
-                'center': {lat: 24.726389, lng: -81.040278},
-                'zoom' : 12
+                'center': {lat: 24.723009, lng: -81.058884},
+                'zoom' : 13
             }
         );
     };
