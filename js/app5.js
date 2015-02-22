@@ -5,7 +5,8 @@ var model = [
         long : -81.095606,
         cat : ['places'],
         imgUrl : '',
-        address : ''
+        address : '',
+        placeid : 'library'
      },
      {
         name : 'Marathon Community Park',
@@ -13,7 +14,8 @@ var model = [
         long : -81.089487,
         cat : ['places','parks'],
         imgUrl : '',
-        address : ''
+        address : '',
+        placeid : 'comm_park'
      },
      {
         name : 'Sombrero Beach',
@@ -21,7 +23,8 @@ var model = [
         long : -81.086107,
         cat : ['beaches','parks'],
         imgUrl : '',
-        address : ''
+        address : '',
+        placeid : 'sombrero_b'
      },
      {
         name : 'Coco Plum Beach',
@@ -29,7 +32,8 @@ var model = [
         long : -81.001592,
         cat : ['beaches', 'parks'],
         imgUrl : '',
-        address : ''
+        address : '',
+        placeid : 'coco_plum'
      },
      {
      	name : 'Dolphin Research Center',
@@ -37,7 +41,8 @@ var model = [
      	long : -80.945549,
      	cat : ['places'],
         imgUrl : '',
-        address : ''
+        address : '',
+        placeid : 'dolphin_re'
      },
      {
         name : 'Duck Key',
@@ -45,7 +50,8 @@ var model = [
         long : -80.912247,
         cat : ['places'],
         imgUrl : '',
-        address : ''
+        address : '',
+        placeid : 'duck_key'
      },
      {
         name : 'Pigeon Key',
@@ -53,26 +59,28 @@ var model = [
         long : -81.155308,
         cat : ['places'],
         imgUrl : '',
-        address : ''       
+        address : '',
+        placeid : 'pigeon_key'       
      }  
 ];
 
 
-function Point(name, lat, long, cat, address, imgUrl) {
+function Point(name, lat, long, cat, address, imgUrl,placeid) {
     this.name = ko.observable(name);
     this.lat = ko.observable(lat);
     this.long = ko.observable(long);
     this.cat = ko.observable(cat);
     this.imgUrl = ko.observable(imgUrl);
+    this.placeid = ko.observable(placeid);
 
 
-    addMarkers(name, lat, long, cat, address, imgUrl);
+    addMarkers(name, lat, long, cat, address, imgUrl,placeid);
 }
 
 
 var map = new google.maps.Map(document.getElementById('map-canvas'), {
     zoom: 13,
-    center: {lat: 24.723009, lng: -81.058884}
+    center: {lat: 24.723009, lng: -81.038884}
 });
 
 var markers = [];
@@ -93,7 +101,8 @@ function initialize(category) {
     };
     service.nearbySearch(request, callback);
 
-    function callback(results, status) {   
+    function callback(results, status) {  
+        console.log(status); 
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 var place = results[i];
@@ -124,67 +133,82 @@ function initialize(category) {
             long : long,
             cat : cat,
             address : address,
-            imgUrl : imgUrl
+            imgUrl : imgUrl,
+            placeid : placeid
         }
 
         model.push(obj);
-        getPlaceDetails(placeid);
     }
 }
 
 function getPlaceDetails(placeid) {
+    var phoneNumber ='';
+    var website = '';
+    
     var request = {
-        placeId : placeid
+        placeId : placeid()
     }
+    console.log(placeid());
     service.getDetails(request, callback);
     function callback(place, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-            console.log(place);
-        }
+            var name = place.name;
+            phoneNumber = place.formatted_phone_number;
+            website = place.website;
+            placeid = place.place_id;
+            openInfoWindow(phoneNumber, placeid, website);
+        }            
+           
     }
 }    
 
-function addMarkers(name,lat,long,cat,address,imgUrl) {
+function addMarkers(name,lat,long,cat,address,imgUrl,placeid) {
     marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, long),
         name: name,
         map : map,
         cat : cat,
         address : address,
-        imgUrl : imgUrl
+        imgUrl : imgUrl,
+        placeid : placeid
     });
 
     google.maps.event.addListener(marker, 'click', (function(marker) {
         return function() {
-          //getWikiFromMarker(name);
-          var content = '<p>' + name + '</p><img src="' +imgUrl + '"><p>'+address+'</p>'; 
-          infowindow.setContent(content);
-          infowindow.setOptions({pixelOffset : new google.maps.Size(0,0)});
-          infowindow.open(map, marker);
-          infoWindowIsOpen = true;
-          map.setOptions({
-            'zoom' : 16,
-            'center' : marker.position
-        });
+          getClickedPlaceDetails(placeid);
         };
     })(marker)); 
-
     
     markers.push(marker);
 }
 
+function getClickedPlaceDetails(placeid) {
+    var phoneNumber ='';
+    var website = '';
+
+    var request = {
+        placeId : placeid
+    }
+    service.getDetails(request, callback);
+    function callback(place, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            phoneNumber = place.formatted_phone_number;
+            website = place.website;
+            var name = place.name;
+            placeid = place.place_id;
+            openInfoWindow(phoneNumber, placeid, website);
+        }
+    }
+}
 
 var viewModel = function() {
     var self = this;
     points = ko.observableArray([]);
     this.query = ko.observable('');
 
-    this.justTesting = function() {
-
-    };
 
     this.emptyPoints = function() {
-    	// $('#wiki-elem').remove();
+         self.recenterMap();
          for (var i=0; i< markers.length; i++){
            markers[i].setMap(null);
          }
@@ -196,7 +220,7 @@ var viewModel = function() {
         for (var place in model) {
             for(i=0; i < model[place].cat.length; i++) {
                 if (model[place].cat[i] ===category) {
-                    points.push(new Point(model[place].name, model[place].lat, model[place].long, model[place].cat) );
+                    points.push(new Point(model[place].name, model[place].lat, model[place].long, model[place].cat, model[place].address, model[place].imgUrl, model[place].placeid));  
                 }
             }           
         }    
@@ -205,7 +229,7 @@ var viewModel = function() {
     this.recenterMap = function() {
         map.setOptions(
             {
-                'center': {lat: 24.723009, lng: -81.058884},
+                'center': {lat: 24.723009, lng: -81.038884},
                 'zoom' : 13
             }
         );
@@ -217,9 +241,12 @@ var viewModel = function() {
         for(var place in model) {
             if (model[place].name.toLowerCase() === search) {
                 self.emptyPoints();
-                points.push(new Point(model[place].name, model[place].lat, model[place].long));
+                points.push(new Point(model[place].name, model[place].lat, model[place].long, model[place].cat, model[place].address, model[place].imgUrl, model[place].placeid));
             }
         }
+        self.closeInfoWindow();
+        this.recenterMap();
+
     };
 
     // The following fix is from Steve Michelotti's blog
@@ -240,26 +267,53 @@ var viewModel = function() {
     	infoWindowIsOpen = false;
     };
 
-    this.openInfoWindow = function(name) {
+    this.openInfoWindow = function(phoneNumber, placeid, website) {
 
     	for (place in model) {
-    		if (model[place].name === name()) {
+    		if (model[place].placeid === placeid) {
     			var currentLat = model[place].lat;
     			var currentLong = model[place].long;
     			var currentName = model[place].name;
                 var currentAddress = model[place].address;
                 var currentImage = model[place].imgUrl;
+                var currentPlaceId = model[place].placeid;
+                if (phoneNumber === undefined) {
+                    var currentPhone = '';
+                }
+                else {
+                    currentPhone = phoneNumber;
+                }
+                if (website === undefined) {
+                    var currentWebsite = '';
+                }
+                else {
+                    currentWebsite = website;
+                }
     		}
     	}
   
+        if (currentImage === '') {
+            if (currentWebsite === '') {
+                var content = '<h3>' + currentName +'</h3><p>' + currentAddress + '<br/>' + currentPhone + '</p>'
+            }
+            else {
+                content ='<h3>' + currentName +'</h3><p>' + currentAddress + '<br/>' + currentPhone + '<br/><a href="'+ currentWebsite + '">Website</a></p>';
+            }
+        }
+        else if (currentWebsite === '') {
+            content = '<h3>' + currentName + '</h3><img src="' + currentImage + '""><p>' + currentAddress +'<br/>'+ currentPhone +'</p>';
+        }
+        else {    
+            content = '<h3>' + currentName + '</h3><img src="' + currentImage + '""><p>' + currentAddress +'<br/>'+ currentPhone +'<br/><a href="' + currentWebsite + '">Website</a></p>';
+        }
+        
         infowindow.setPosition({lat: currentLat, lng: currentLong});
         infowindow.setOptions({pixelOffset : new google.maps.Size(0,-35)});
-        var content = '<p>' + currentName + '</p><img src=' + currentImage + '"><p>' + currentAddress + '</p>';
         infowindow.setContent(content);
         infowindow.open(map);
         infoWindowIsOpen = true;
         map.setOptions({
-            'zoom' : 16,
+            'zoom' : 15,
             'center' : {lat: currentLat, lng: currentLong}
         });
     };

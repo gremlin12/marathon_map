@@ -13,19 +13,21 @@
     <button type="button" data-bind="click: searchPlaces()"> Search </button>
     </form>
   <ul>
-    <li data-bind="click: function(){emptyPoints(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}">Beaches</li>
-    <li data-bind="click: function(){emptyPoints(), getPlaces('places'), closeInfoWindow(),recenterMap()}">Places</li>
-    <li data-bind="click: function(){emptyPoints(), getPlaces('parks'), closeInfoWindow(),recenterMap()}">Parks</li>
+   <li data-bind="click: function(){emptyPoints(), initialize('place_of_worship'),closeInfoWindow(),recenterMap()}">Places of Worship</li>
    <li data-bind="click: function(){emptyPoints(), initialize('restaurant'),closeInfoWindow(),recenterMap()}">Restaurants</li>
+   <li data-bind="click: function(){emptyPoints(), initialize('campground'),closeInfoWindow(),recenterMap()}">Campgrounds</li>
+   <li data-bind="click: function(){emptyPoints(), initialize('local_government_office'),closeInfoWindow(),recenterMap()}">Government Offices</li>
+   <li data-bind="click: function(){emptyPoints(), initialize('park'),closeInfoWindow(),recenterMap()}">Parks</li>
+   <li data-bind="click: function(){emptyPoints(), initialize('post_office'),closeInfoWindow(),recenterMap()}">Post Office</li>
   </ul>
   <div id="map-canvas"></div>
   <ul data-bind="foreach: points">
-    <li data-bind="text: name, click: function(){closeInfoWindow(),openInfoWindow(name)}"></li>
+    <li data-bind="text: name, click: function(){closeInfoWindow(),getPlaceDetails(placeid)}"></li>
   </ul>
   <div id="wikipedia-links"></div>
 
   <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UpkOItdYcObCcD9-pQ2tGBAkm7XjOPI"></script>-->
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UpkOItdYcObCcD9-pQ2tGBAkm7XjOPI&libraries=places"></script>
   <script src="js/knockout-3.2.0.js"></script>
   <script src="js/jquery-1.11.2.min.js"></script>
   <script src="js/app5.js"></script>
