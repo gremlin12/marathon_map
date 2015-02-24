@@ -233,6 +233,7 @@ var viewModel = function() {
                 'zoom' : 13
             }
         );
+        self.closeInfoWindow();
     };
 
 
@@ -294,17 +295,17 @@ var viewModel = function() {
   
         if (currentImage === '') {
             if (currentWebsite === '') {
-                var content = '<h3>' + currentName +'</h3><p>' + currentAddress + '<br/>' + currentPhone + '</p>'
+                var content = '<p class="bold">' + currentName +'</p><p>' + currentAddress + '<br/>' + currentPhone + '</p>'
             }
             else {
-                content ='<h3>' + currentName +'</h3><p>' + currentAddress + '<br/>' + currentPhone + '<br/><a href="'+ currentWebsite + '">Website</a></p>';
+                content ='<p class="bold">' + currentName +'</p><p>' + currentAddress + '<br/>' + currentPhone + '<br/><a href="'+ currentWebsite + '">Website</a></p>';
             }
         }
         else if (currentWebsite === '') {
-            content = '<h3>' + currentName + '</h3><img src="' + currentImage + '""><p>' + currentAddress +'<br/>'+ currentPhone +'</p>';
+            content = '<p class="bold">' + currentName + '</p><img src="' + currentImage + '""><p>' + currentAddress +'<br/>'+ currentPhone +'</p>';
         }
         else {    
-            content = '<h3>' + currentName + '</h3><img src="' + currentImage + '""><p>' + currentAddress +'<br/>'+ currentPhone +'<br/><a href="' + currentWebsite + '">Website</a></p>';
+            content = '<p class="bold">' + currentName + '</p><img src="' + currentImage + '""><p>' + currentAddress +'<br/>'+ currentPhone +'<br/><a href="' + currentWebsite + '">Website</a></p>';
         }
         
         infowindow.setPosition({lat: currentLat, lng: currentLong});
