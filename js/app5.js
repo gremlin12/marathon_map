@@ -101,12 +101,20 @@ function initialize(category) {
     };
     service.nearbySearch(request, callback);
 
-    function callback(results, status) {  
-        console.log(status); 
+    function callback(results, status, pagination) {  
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 var place = results[i];
                 createMarker(results[i]);
+            }
+            if (pagination.hasNextPage) {
+                var moreButton = document.getElementById('more');
+                moreButton.disabled = false;
+
+                google.maps.event.addDomListenerOnce(moreButton, 'click', function() {
+                    moreButton.disabled = true;
+                    pagination.nextPage();
+                });
             }
         }
     }
