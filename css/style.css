@@ -1,18 +1,113 @@
+
+
 body {
     height: 100%;
-    margin: 0;
     padding: 0;
+}
+
+h1 {
+    font-family: courier, sans-serif;
 }
 
 #map-canvas {
     display: block;
     height: 400px;
-    width: 96%;
+    width: 100%;
 }
+
 
 #map {
     display: block;
     height: 100%;
     margin-left: 5%;
     margin-right: 5%;
+}
+ul {
+    padding:0;
+}
+
+#menu {
+    margin: 0;
+}
+
+#menu li {
+    color: white;
+    display: inline;
+    line-height: 30px;
+    min-height: 30px;
+    padding: 5px;
+    position: relative;
+    background: #669999;
+    white-space: pre;
+
+
+}
+
+#menu li:nth-child(odd){
+    background: #7887AB;
+}
+
+.search {
+    display: inline;
+    position: relative;
+}
+
+#results li {
+    display: inline;
+    color: black;
+    line-height : 30px;
+    min-height: 30px;
+    padding: 5px;
+    position: relative;
+    background: #FDD1AA;
+    white-space: pre;
+}
+
+#results li:nth-child(odd) {
+    background: #FFE3AA;
+}
+
+
+
+.bold {
+    font-weight: bold;
+}
+
+.container {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+@media only screen and (max-width: 1024px) {
+    body {
+        margin: 10px;
+        padding: 0;
+    }
+    h1 {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    ul {
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+    li {
+        font-size: 12px;
+    }
+
+}
+
+@media only screen and (max-width:900px) {
+ 
+}
+
+@media only screen and (max-width: 750px) {
+
+}
+
+@media only screen and (max-width: 320px) {
+
 }
