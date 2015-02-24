@@ -8,22 +8,28 @@
   <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-    <form>
+<h1>Marathon Map</h1>
+  <div id="menu">  
+    <ul>
+      <li data-bind="click: function(){emptyPoints(), initialize('place_of_worship'),closeInfoWindow(),recenterMap()}">Places of Worship</li>
+      <li data-bind="click: function(){emptyPoints(), initialize('restaurant'),closeInfoWindow(),recenterMap()}">Restaurants</li>
+      <li data-bind="click: function(){emptyPoints(), initialize('campground'),closeInfoWindow(),recenterMap()}">Campgrounds</li>
+      <li data-bind="click: function(){emptyPoints(), initialize('local_government_office'),closeInfoWindow(),recenterMap()}">Government Offices</li>
+      <li data-bind="click: function(){emptyPoints(), initialize('park'),closeInfoWindow(),recenterMap()}">Parks</li>
+      <li data-bind="click: function(){emptyPoints(), initialize('post_office'),closeInfoWindow(),recenterMap()}">Post Office</li>
+    </ul>
+  </div>
+  <div id="map-canvas"></div>
+  <form class="search">
     <input type="search" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup', event: {keypress: searchOnEnter}">
     <button type="button" data-bind="click: searchPlaces()"> Search </button>
     </form>
-  <ul>
-   <li data-bind="click: function(){emptyPoints(), initialize('place_of_worship'),closeInfoWindow(),recenterMap()}">Places of Worship</li>
-   <li data-bind="click: function(){emptyPoints(), initialize('restaurant'),closeInfoWindow(),recenterMap()}">Restaurants</li>
-   <li data-bind="click: function(){emptyPoints(), initialize('campground'),closeInfoWindow(),recenterMap()}">Campgrounds</li>
-   <li data-bind="click: function(){emptyPoints(), initialize('local_government_office'),closeInfoWindow(),recenterMap()}">Government Offices</li>
-   <li data-bind="click: function(){emptyPoints(), initialize('park'),closeInfoWindow(),recenterMap()}">Parks</li>
-   <li data-bind="click: function(){emptyPoints(), initialize('post_office'),closeInfoWindow(),recenterMap()}">Post Office</li>
-  </ul>
-  <div id="map-canvas"></div>
-  <ul data-bind="foreach: points">
-    <li data-bind="text: name, click: function(){closeInfoWindow(),getPlaceDetails(placeid)}"></li>
-  </ul>
+    <button type="button" class="search" data-bind="click: recenterMap()">Reset Map</button>
+  <div id="results">  
+    <ul data-bind="foreach: points">
+      <li data-bind="text: name, click: function(){closeInfoWindow(),getPlaceDetails(placeid)}"><</li>
+    </ul>
+  </div>
   <div id="wikipedia-links"></div>
 
   <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UpkOItdYcObCcD9-pQ2tGBAkm7XjOPI"></script>-->
