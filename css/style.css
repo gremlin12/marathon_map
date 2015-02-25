@@ -14,12 +14,23 @@ h1 {
     height: 400px;
     width: 100%;
 }
+  #menu ul {list-style: none;padding: 0px;margin: 0px;}
+  #menu ul li {display: block;position: relative;float: left;border:1px solid #000; z-index: 99999;}
+  #menu li ul {display: none;}
+  #menu ul li a {display: block;background: #7887AB;padding: 5px 10px 5px 10px;text-decoration: none;
+           white-space: nowrap;color: #fff;}
+  #menu ul li a:hover {background: #7887AB;}
+  #menu li:hover ul {display: block; position: absolute;}
+  #menu li:hover li {float: none;}
+  #menu li:hover a {background: #7887AB;}
+  #menu li:hover li a:hover {background: #669999;}
+  #drop-nav li ul li {border-top: 0px;}
 
 ul {
     padding:0;
 }
 
-#menu {
+/*#menu {
     margin: 0;
 }
 
@@ -35,6 +46,7 @@ ul {
 
 
 }
+*/
 
 #menu li:nth-child(odd){
     background-color: #7887AB;
@@ -44,6 +56,7 @@ ul {
     display: inline;
     position: relative;
 }
+
 
 #results li {
     display: inline;
@@ -105,4 +118,6 @@ ul {
   li {
     font-size: 12px;
   }
+  
+
 }

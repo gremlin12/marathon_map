@@ -10,19 +10,23 @@
 <body>
 <h1>Marathon Map</h1>
   <div id="menu">  
-    <ul>
-      <li data-bind="click: function(){emptyPoints(), initialize('place_of_worship'),closeInfoWindow(),recenterMap()}">Places of Worship</li>
-      <li data-bind="click: function(){emptyPoints(), initialize('restaurant'),closeInfoWindow(),recenterMap()}">Restaurants</li>
-      <li data-bind="click: function(){emptyPoints(), initialize('campground'),closeInfoWindow(),recenterMap()}">Campgrounds</li>
-      <li data-bind="click: function(){emptyPoints(), initialize('local_government_office'),closeInfoWindow(),recenterMap()}">Government Offices</li>
-      <li data-bind="click: function(){emptyPoints(), initialize('park'),closeInfoWindow(),recenterMap()}">Parks</li>
-      <li data-bind="click: function(){emptyPoints(), initialize('post_office'),closeInfoWindow(),recenterMap()}">Post Office</li>
-      <li data-bind="click: function(){emptyPoints(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}">Beaches</li>
+    <ul id="drop-nav">
+      <li><a href="#">Browse Places</a>
+      <ul>
+      <li data-bind="click: function(){emptyPoints(), initialize('place_of_worship'),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li>
+      <li data-bind="click: function(){emptyPoints(), initialize('restaurant'),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li>
+      <li data-bind="click: function(){emptyPoints(), initialize('campground'),closeInfoWindow(),recenterMap()}"><a href="#">Campgrounds</a></li>
+      <li data-bind="click: function(){emptyPoints(), initialize('local_government_office'),closeInfoWindow(),recenterMap()}"><a href="#">Government Offices</a></li>
+      <li data-bind="click: function(){emptyPoints(), initialize('park'),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li>
+      <li data-bind="click: function(){emptyPoints(), initialize('post_office'),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li>
+      <li data-bind="click: function(){emptyPoints(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li>
+      </ul>
+      </li>
     </ul>
   </div>
   <div id="map-canvas"></div>
   <form class="search">
-    <input type="search" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup', event: {keypress: searchOnEnter}">
+    <input type="search" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup'">
     <button type="button" data-bind="click: searchPlaces()"> Search </button>
     </form>
     <button type="button" class="search" data-bind="click: recenterMap()">Reset Map</button>

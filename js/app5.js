@@ -250,13 +250,11 @@ var viewModel = function() {
     // The following fix is from Steve Michelotti's blog
 
     this.searchOnEnter = function() {
-        var keyCode = (event.which ? event.which : event.keyCode);
-            if (keyCode === 13) {
+        var code = (event.keyCode ? event.keyCode : event.which);
+            if (code === 13) {
                 this.searchPlaces();
-                return false;
             }
-            return true;
-    };
+    }; 
 
     this.closeInfoWindow = function() {
         if (infoWindowIsOpen === true) {
