@@ -65,17 +65,7 @@ var model = [
 ];
 
 
-function Point(name, lat, long, cat, address, imgUrl,placeid) {
-    this.name = ko.observable(name);
-    this.lat = ko.observable(lat);
-    this.long = ko.observable(long);
-    this.cat = ko.observable(cat);
-    this.imgUrl = ko.observable(imgUrl);
-    this.placeid = ko.observable(placeid);
-
-
-    addMarkers(name, lat, long, cat, address, imgUrl,placeid);
-}
+/* Google Map View */
 
 
 var map = new google.maps.Map(document.getElementById('map-canvas'), {
@@ -88,8 +78,9 @@ var marker;
 var request;
 var service = new google.maps.places.PlacesService(map);
 var infowindow = new google.maps.InfoWindow();
-
 var infoWindowIsOpen = false;
+var moreButton = document.getElementById('more');
+moreButton.disabled = true;
 
 
 function initialize(category) {
@@ -108,7 +99,7 @@ function initialize(category) {
                 createMarker(results[i]);
             }
             if (pagination.hasNextPage) {
-                var moreButton = document.getElementById('more');
+                //var moreButton = document.getElementById('more');
                 moreButton.disabled = false;
 
                 google.maps.event.addDomListenerOnce(moreButton, 'click', function() {
@@ -214,6 +205,16 @@ var viewModel = function() {
     points = ko.observableArray([]);
     this.query = ko.observable('');
 
+    this.Point = function (name, lat, long, cat, address, imgUrl,placeid) {
+        this.name = ko.observable(name);
+        this.lat = ko.observable(lat);
+        this.long = ko.observable(long);
+        this.cat = ko.observable(cat);
+        this.imgUrl = ko.observable(imgUrl);
+        this.placeid = ko.observable(placeid);
+
+        addMarkers(name, lat, long, cat, address, imgUrl,placeid);
+    }
 
     this.emptyPoints = function() {
          self.recenterMap();
@@ -327,73 +328,6 @@ var viewModel = function() {
         });
     };
 
-/*    this.removeWiki = function() {
-    	$('#wiki-elem').remove();
-    }; */
-
-
-/*    this.getWikiFromMarker = function(name) {
-        for (var place in model) {
-            if (model[place].name === name) {
-                if (model[place].wiki === false) {
-                    infowindow.setContent(name);
-                }    
-                else {
-                    var imageStr = '';
-                    var contentString = '';
-                    var linkString = '';
-                    var searchTerm = name;
-                    var wikiString = 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts|images|info&rvprop=content&format=json&inprop=url&exsentences=5&exlimit=3&exsentences=20&titles=' + encodeURIComponent(searchTerm);
-                    $.ajax({
-                        url: wikiString,
-                        dataType: 'jsonp',
-                        success: function(response) {    
-                            for (var key in response.query.pages) {
-                  
-                                contentString = '<p>'+response.query.pages[key]['title']+'</p>' + response.query.pages[key].extract;
-                                linkString =  '<p>Learn more about <a href="' +  response.query.pages[key].fullurl+'">'+name+'</a></p>';
-                                infowindow.setContent(contentString + linkString);   
-                            }
-                        }
-                    })
-                }
-            }
-        }           
-    };
-
-    this.getWiki = function(name) {
-        for (var place in model) {
-            if (model[place].name === name()) {
-                if (model[place].wiki === false) {
-                    infowindow.setContent(name());
-                }
-                else {    
-                    var contentString = '';
-                    var linkString = '';
-                    var searchTerm = name();
-                    var wikiString = 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts|images|info&rvprop=content&format=json&inprop=url&exsentences=5&exlimit=3&exsentences=20&titles=' + encodeURIComponent(searchTerm);
-
-                    $.ajax({
-                        url: wikiString,
-                        dataType: 'jsonp',
-                        success: function(response) {            
-                            for (var key in response.query.pages) {
-                                contentString = '<p>'+response.query.pages[key]['title']+'</p>' + response.query.pages[key].extract; 
-                                linkString =  '<p>Learn more about <a href="' +  response.query.pages[key].fullurl+'">'+name()+'</a></p>';
-                            }                                                       
-                            var currentLat = model[place].lat;
-                            var currentLong = model[place].long;
-                            var currentName = model[place].name;                            
-                            infowindow.setPosition({lat: currentLat, lng: currentLong});
-                            infowindow.setContent(contentString +linkString);
-                            infowindow.open(map);
-                            infoWindowIsOpen = true;  
-                        }
-                    })
-                }
-            }
-        }
-    }; */           
 };
 
 
