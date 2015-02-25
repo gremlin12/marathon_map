@@ -259,19 +259,19 @@ var viewModel = function() {
     };
 
     this.closeInfoWindow = function() {
-    	if (infoWindowIsOpen === true) {
-    		infowindow.close();
-    	}
-    	infoWindowIsOpen = false;
+        if (infoWindowIsOpen === true) {
+            infowindow.close();
+        }
+        infoWindowIsOpen = false;
     };
 
     this.openInfoWindow = function(phoneNumber, placeid, website) {
 
-    	for (place in model) {
-    		if (model[place].placeid === placeid) {
-    			var currentLat = model[place].lat;
-    			var currentLong = model[place].long;
-    			var currentName = model[place].name;
+        for (place in model) {
+            if (model[place].placeid === placeid) {
+                var currentLat = model[place].lat;
+                var currentLong = model[place].long;
+                var currentName = model[place].name;
                 var currentAddress = model[place].address;
                 var currentImage = model[place].imgUrl;
                 var currentPlaceId = model[place].placeid;
@@ -287,8 +287,8 @@ var viewModel = function() {
                 else {
                     currentWebsite = website;
                 }
-    		}
-    	}
+            }
+        }
   
         if (currentImage === '') {
             if (currentWebsite === '') {
@@ -314,12 +314,10 @@ var viewModel = function() {
             'zoom' : 15,
             'center' : {lat: currentLat, lng: currentLong}
         });
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
     };
 
 };
 
 
 ko.applyBindings(viewModel());
-
-
-
