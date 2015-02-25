@@ -1,30 +1,14 @@
 var model = [    
      {
-        name : 'Marathon Library',
-        lat : 24.710633,
-        long : -81.095606,
-        cat : ['places'],
-        imgUrl : '',
-        address : '',
-        placeid : 'library'
-     },
-     {
-        name : 'Marathon Community Park',
-        lat : 24.711631,
-        long : -81.089487,
-        cat : ['places','parks'],
-        imgUrl : '',
-        address : '',
-        placeid : 'comm_park'
-     },
-     {
         name : 'Sombrero Beach',
         lat : 24.691533,
         long : -81.086107,
         cat : ['beaches','parks'],
         imgUrl : '',
-        address : '',
-        placeid : 'sombrero_b'
+        address : 'Sombrero Beach Rd., Marathon',
+        placeid : '001',
+        website : 'http://www.ci.marathon.fl.us/government/parks/city-parks-and-beaches/',
+        phoneNumber : '(305) 743-0033'
      },
      {
         name : 'Coco Plum Beach',
@@ -32,36 +16,11 @@ var model = [
         long : -81.001592,
         cat : ['beaches', 'parks'],
         imgUrl : '',
-        address : '',
-        placeid : 'coco_plum'
-     },
-     {
-     	name : 'Dolphin Research Center',
-     	lat: 24.766999,
-     	long : -80.945549,
-     	cat : ['places'],
-        imgUrl : '',
-        address : '',
-        placeid : 'dolphin_re'
-     },
-     {
-        name : 'Duck Key',
-        lat : 24.775669,
-        long : -80.912247,
-        cat : ['places'],
-        imgUrl : '',
-        address : '',
-        placeid : 'duck_key'
-     },
-     {
-        name : 'Pigeon Key',
-        lat : 24.703991,
-        long : -81.155308,
-        cat : ['places'],
-        imgUrl : '',
-        address : '',
-        placeid : 'pigeon_key'       
-     }  
+        address : 'Coco Plum Dr., Marathon',
+        placeid : '002',
+        website : 'http://www.ci.marathon.fl.us/government/parks/city-parks-and-beaches/',
+        phoneNumber : '(305) 743-0033'
+     }
 ];
 
 
@@ -99,7 +58,6 @@ function initialize(category) {
                 createMarker(results[i]);
             }
             if (pagination.hasNextPage) {
-                //var moreButton = document.getElementById('more');
                 moreButton.disabled = false;
 
                 google.maps.event.addDomListenerOnce(moreButton, 'click', function() {
@@ -147,7 +105,6 @@ function getPlaceDetails(placeid) {
     var request = {
         placeId : placeid()
     }
-    console.log(placeid());
     service.getDetails(request, callback);
     function callback(place, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -174,11 +131,26 @@ function addMarkers(name,lat,long,cat,address,imgUrl,placeid) {
 
     google.maps.event.addListener(marker, 'click', (function(marker) {
         return function() {
-          getClickedPlaceDetails(placeid);
+          sortClickedMarkers(placeid);
         };
     })(marker)); 
     
     markers.push(marker);
+}
+
+function sortClickedMarkers(placeid) {
+    if (ko.utils.unwrapObservable(placeid).length > 6) {
+        getClickedPlaceDetails(placeid);
+    }
+    else {
+    for (var place in model) {
+        if (model[place].placeid === ko.utils.unwrapObservable(placeid)) {
+            var phoneNumber = model[place].phoneNumber;
+            var website = model[place].website;
+            openInfoWindow(phoneNumber, ko.utils.unwrapObservable(placeid), website); 
+        }
+    } 
+    } 
 }
 
 function getClickedPlaceDetails(placeid) {
@@ -207,8 +179,8 @@ var viewModel = function() {
 
     this.Point = function (name, lat, long, cat, address, imgUrl,placeid) {
         this.name = ko.observable(name);
-        this.lat = ko.observable(lat);
-        this.long = ko.observable(long);
+        this.lat = lat;
+        this.long = long;
         this.cat = ko.observable(cat);
         this.imgUrl = ko.observable(imgUrl);
         this.placeid = ko.observable(placeid);
@@ -233,6 +205,22 @@ var viewModel = function() {
                 }
             }           
         }    
+    };
+
+    this.sortPlaces = function(placeid) {
+        if (ko.utils.unwrapObservable(placeid).length > 6) {
+            getPlaceDetails(placeid);
+        }
+
+        else {
+            for (var place in model) {
+                if (model[place].placeid === ko.utils.unwrapObservable(placeid)) {
+                    var phoneNumber = model[place].phoneNumber;
+                    var website = model[place].website;
+                    openInfoWindow(phoneNumber, ko.utils.unwrapObservable(placeid), website); 
+                }
+            }        
+        }
     };
 
     this.recenterMap = function() {

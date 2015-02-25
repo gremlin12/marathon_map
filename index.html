@@ -17,6 +17,7 @@
       <li data-bind="click: function(){emptyPoints(), initialize('local_government_office'),closeInfoWindow(),recenterMap()}">Government Offices</li>
       <li data-bind="click: function(){emptyPoints(), initialize('park'),closeInfoWindow(),recenterMap()}">Parks</li>
       <li data-bind="click: function(){emptyPoints(), initialize('post_office'),closeInfoWindow(),recenterMap()}">Post Office</li>
+      <li data-bind="click: function(){emptyPoints(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}">Beaches</li>
     </ul>
   </div>
   <div id="map-canvas"></div>
@@ -27,7 +28,7 @@
     <button type="button" class="search" data-bind="click: recenterMap()">Reset Map</button>
   <div id="results">  
     <ul data-bind="foreach: points">
-      <li data-bind="text: name, click: function(){closeInfoWindow(),getPlaceDetails(placeid)}"><</li>
+      <li data-bind="text: name, click: function(){closeInfoWindow(),sortPlaces(placeid)}"><</li>
     </ul>
       <button id="more">More</button>
   </div>
