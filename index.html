@@ -8,35 +8,51 @@
   <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-<h1>Marathon Map</h1>
-  <div id="menu">  
-    <ul id="drop-nav">
-      <li><a href="#">Browse Places</a>
-      <ul>
-      <li data-bind="click: function(){emptyPoints(), initialize('place_of_worship'),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li>
-      <li data-bind="click: function(){emptyPoints(), initialize('restaurant'),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li>
-      <li data-bind="click: function(){emptyPoints(), initialize('campground'),closeInfoWindow(),recenterMap()}"><a href="#">Campgrounds</a></li>
-      <li data-bind="click: function(){emptyPoints(), initialize('local_government_office'),closeInfoWindow(),recenterMap()}"><a href="#">Government Offices</a></li>
-      <li data-bind="click: function(){emptyPoints(), initialize('park'),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li>
-      <li data-bind="click: function(){emptyPoints(), initialize('post_office'),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li>
-      <li data-bind="click: function(){emptyPoints(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li>
+  <div class="grid">
+  
+    <div id="header">
+      <h1>Marathon Map</h1>
+    </div>
+
+    <div id="menu">  
+      <ul id="drop-nav">
+        <li><a href="#">Browse Places</a>
+        <ul>
+          <li data-bind="click: function(){emptyPoints(), initialize('place_of_worship'),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li>
+          <li data-bind="click: function(){emptyPoints(), initialize('restaurant'),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li>
+          <li data-bind="click: function(){emptyPoints(), initialize('campground'),closeInfoWindow(),recenterMap()}"><a href="#">Campgrounds</a></li>
+          <li data-bind="click: function(){emptyPoints(), initialize('local_government_office'),closeInfoWindow(),recenterMap()}"><a href="#">Government Offices</a></li>
+          <li data-bind="click: function(){emptyPoints(), initialize('park'),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li>
+          <li data-bind="click: function(){emptyPoints(), initialize('post_office'),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li>
+          <li data-bind="click: function(){emptyPoints(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li>
+        </ul>
+        </li>
       </ul>
-      </li>
-    </ul>
-  </div>
-  <div id="map-canvas"></div>
-  <form class="search">
-    <input type="search" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
-    <button type="button" data-bind="click: searchPlaces()"> Search </button>
-    </form>
-    <button type="button" class="search" data-bind="click: recenterMap()">Reset Map</button>
-  <div id="results">  
-    <ul data-bind="foreach: points">
-      <li ><a href="#" data-bind="text: name, click: function(){closeInfoWindow(),sortPlaces(placeid)}"></a></li>
-    </ul>
+    </div>
+
+    <div class="row">
+    <div id="map-area" class="col-9">
+      <div id="map-canvas"></div>
+      <div id="searchbar">
+        <form class="search">
+          <input type="search" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+          <button type="button" data-bind="click: searchPlaces()"> Search </button>
+        </form>
+        <button type="button" class="search" data-bind="click: recenterMap()">Reset Map</button>
+      </div> 
+    </div> <!--end of map-area-->
+  
+    <div id="results-display" class="col-3 end">
+      <div id="results">  
+        <ul data-bind="foreach: points">
+        <li ><a href="#" data-bind="text: name, click: function(){closeInfoWindow(),sortPlaces(placeid)}"></a></li>
+        </ul>
       <button id="more">More</button>
-  </div>
-  <div id="wikipedia-links"></div>
+      </div>
+
+      </div> <!--end of results-display-->
+  </div> <!-- end of row -->
+  </div> <!-- end of grid -->
 
   <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UpkOItdYcObCcD9-pQ2tGBAkm7XjOPI"></script>-->
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UpkOItdYcObCcD9-pQ2tGBAkm7XjOPI&libraries=places"></script>
