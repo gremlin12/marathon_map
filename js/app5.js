@@ -275,7 +275,13 @@ var viewModel = function() {
                 var currentLong = model[place].long;
                 var currentName = model[place].name;
                 var currentAddress = model[place].address;
-                var currentImage = model[place].imgUrl;
+
+                if (window.matchMedia("(min-width: 400px)").matches) {
+                    var currentImage = model[place].imgUrl;
+                } else {
+                    currentImage = '';
+                }
+                
                 var currentPlaceId = model[place].placeid;
                 if (phoneNumber === undefined) {
                     var currentPhone = '';
