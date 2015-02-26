@@ -69,11 +69,30 @@ ul {
     white-space: pre;
 }
 
+#results li a {
+	line-height: 30px;
+	padding: 5px;
+	color: black;
+}
+
 #results li:nth-child(odd) {
     background-color: #FFE3AA;
 }
 
+#results li:hover {
+	background-color: #7887AB;
+	color: white;
+	padding: 5px;
+}
 
+#results li a:link {
+	text-decoration: none;
+}
+
+#results li a:hover {
+	color: white;
+
+}
 
 .bold {
     font-weight: bold;

@@ -174,7 +174,7 @@ function getClickedPlaceDetails(placeid) {
 
 var viewModel = function() {
     var self = this;
-    points = ko.observableArray([]);
+    this.points = ko.observableArray([]);
     this.query = ko.observable('');
 
     this.Point = function (name, lat, long, cat, address, imgUrl,placeid) {
@@ -236,25 +236,29 @@ var viewModel = function() {
 
     this.searchPlaces = function(query) {
         var search = this.query().toLowerCase();
-        for(var place in model) {
+        for (place in model) {
             if (model[place].name.toLowerCase() === search) {
                 self.emptyPoints();
                 points.push(new Point(model[place].name, model[place].lat, model[place].long, model[place].cat, model[place].address, model[place].imgUrl, model[place].placeid));
-            }
+            }             
         }
         self.closeInfoWindow();
         this.recenterMap();
 
-    };
+    }; 
+
+
 
     // The following fix is from Steve Michelotti's blog
 
-    this.searchOnEnter = function() {
-        var code = (event.keyCode ? event.keyCode : event.which);
-            if (code === 13) {
+   /* this.searchOnEnter = function() {
+        var keyCode = (event.which ? event.which : event.keyCode);
+            if (event.keyCode === 13) {
                 this.searchPlaces();
+                return false;
             }
-    }; 
+            return true;
+    }; */
 
     this.closeInfoWindow = function() {
         if (infoWindowIsOpen === true) {
