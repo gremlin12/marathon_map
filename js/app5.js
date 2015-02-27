@@ -38,32 +38,22 @@ var request;
 var service = new google.maps.places.PlacesService(map);
 var infowindow = new google.maps.InfoWindow();
 var infoWindowIsOpen = false;
-var moreButton = document.getElementById('more');
-moreButton.disabled = true;
+
 
 
 function initialize(category) {
-
     var request = {
         location: map.center,
-        radius: '25000',
+        radius: '20000',
         types: [category]
     };
     service.nearbySearch(request, callback);
 
-    function callback(results, status, pagination) {  
+    function callback(results, status) {  
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 var place = results[i];
                 createMarker(results[i]);
-            }
-            if (pagination.hasNextPage) {
-                moreButton.disabled = false;
-
-                google.maps.event.addDomListenerOnce(moreButton, 'click', function() {
-                    moreButton.disabled = true;
-                    pagination.nextPage();
-                });
             }
         }
     }
@@ -96,6 +86,7 @@ function initialize(category) {
 
         model.push(obj);
     }
+    $('#more').removeClass('hidden');
 }
 
 function getPlaceDetails(placeid) {
@@ -172,10 +163,15 @@ function getClickedPlaceDetails(placeid) {
     }
 }
 
+function init () {
+
+}
+
 var viewModel = function() {
     var self = this;
     this.points = ko.observableArray([]);
     this.query = ko.observable('');
+
 
     this.Point = function (name, lat, long, cat, address, imgUrl,placeid) {
         this.name = ko.observable(name);
@@ -195,6 +191,7 @@ var viewModel = function() {
          }
          markers.length = 0;  
          self.points.removeAll();
+
     };
     
     this.getPlaces = function(category){

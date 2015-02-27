@@ -16,14 +16,21 @@
 
     <div id="menu">  
       <ul id="drop-nav">
-        <li><a href="#">Browse Places</a>
-        <ul>
+        <li><a href="#">Browse Places &#9660; </a>
+        <ul>          
           <li data-bind="click: function(){emptyPoints(), initialize('place_of_worship'),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li>
-          <li data-bind="click: function(){emptyPoints(), initialize('restaurant'),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li>
+          
           <li data-bind="click: function(){emptyPoints(), initialize('campground'),closeInfoWindow(),recenterMap()}"><a href="#">Campgrounds</a></li>
           <li data-bind="click: function(){emptyPoints(), initialize('local_government_office'),closeInfoWindow(),recenterMap()}"><a href="#">Government Offices</a></li>
           <li data-bind="click: function(){emptyPoints(), initialize('park'),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li>
           <li data-bind="click: function(){emptyPoints(), initialize('post_office'),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li>
+          <li data-bind="click: function(){emptyPoints(), initialize('aquarium'),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li>
+          <li data-bind="click: function(){emptyPoints(), initialize('school'),closeInfoWindow(),recenterMap()}"><a href="#">Schools</a></li>
+          <li data-bind="click: function(){emptyPoints(), initialize('doctor'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li>
+          
+          <li data-bind="click: function(){emptyPoints(), initialize('bank'),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li>
+          <li data-bind="click: function(){emptyPoints(), initialize('library'),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li>
+          <li data-bind="click: function(){emptyPoints(), initialize('gym'),closeInfoWindow(),recenterMap()}"><a href="#">Gym</a></li>
           <li data-bind="click: function(){emptyPoints(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li>
         </ul>
         </li>
@@ -47,7 +54,6 @@
         <ul data-bind="foreach: points">
         <li ><a href="#" data-bind="text: name, click: function(){closeInfoWindow(),sortPlaces(placeid)}"></a></li>
         </ul>
-      <button id="more">More</button>
       </div>
 
       </div> <!--end of results-display-->
