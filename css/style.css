@@ -225,7 +225,7 @@ ul {
 
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 320px) {
 
   body {
     margin: 10px;
@@ -250,7 +250,15 @@ ul {
     margin-bottom: 10px;
   }
   
-  
+  #menu li {
+  	line-height: 30px;
+  	min-height: 30px;
+  }
+
+  #menu li a {
+  	font-size: 20px;
+  	line-height: 30px;
+  }
 
   #results li {
   	line-height : 26px;
