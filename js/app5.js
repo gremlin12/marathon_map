@@ -162,6 +162,9 @@ function getClickedPlaceDetails(placeid) {
         }
     }
 }
+
+
+
 /*
 var mobileMenuString = '<li><a href="#">Browse Places &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' +
  "'place_of_worship'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
@@ -187,15 +190,21 @@ var mobileMenuString = '<li><a href="#">Browse Places &#9660;</a><ul><li data-bi
     '<li class="cat" ><a href="#">Recreation &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' + "'park'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li><li data-bind="click: function(){emptyPoints(), getPlaces(' + "'beaches'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'aquarium'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'library'" +'),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'movie_theater'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Movie Theater</a></li><li data-bind="click: function(){emptyPoints(), initialize(' +"'gym'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Gym</a></li></ul>' +
     '<li class="cat"><a href="#">Government &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' + "'local_government_office'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Local Offices</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'post_office'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li></ul><li><a href="#">Services &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' +"'doctor'" +'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'bank'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li></ul></li><ul>';  
           
-
+*/
 
     init = function() {
-                //if (window.matchMedia("(min-width: 900px)").matches) {
-                    $('#menu-list').append(deskMenuString);
-              //  } else {
-               //     $('#drop-nav').append(mobileMenuString);   
-          //  }
-    };    */
+        var categories = ['lodging', 'culture', 'recreation', 'government', 'services'];
+        var icons = ['&#9789;', '&#9774;', '&#9786;', '&#10026;', '&#36;'];
+        var labels = ['Eating & Sleeping', 'Culture', 'Recreation', 'Government', 'Services']
+        for (i=0; i<categories.length; i++) {
+                if (window.matchMedia("(min-width: 400px)").matches) {
+                    $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] +'>' + labels[i] + '</a>' );
+                } else {
+                    $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] + '>' + icons[i] + '</a>' );  
+                } 
+        }
+
+    };    
 
 var viewModel = function() {
     var self = this;
@@ -212,7 +221,7 @@ var viewModel = function() {
         this.placeid = ko.observable(placeid);
 
         addMarkers(name, lat, long, cat, address, imgUrl,placeid);
-    }
+    };
 
     this.emptyPoints = function() {
          self.recenterMap();
@@ -221,7 +230,6 @@ var viewModel = function() {
          }
          markers.length = 0;  
          self.points.removeAll();
-
     };
     
     this.getPlaces = function(category){
@@ -254,9 +262,8 @@ var viewModel = function() {
         map.setOptions(
             {
                 'center': {lat: 24.723009, lng: -81.038884},
-                'zoom' : 13
-            }
-        );
+                'zoom' : 12
+            });       
         self.closeInfoWindow();
     };
 
@@ -354,7 +361,6 @@ var viewModel = function() {
 
 };
 
-
-
+init();
 ko.applyBindings(viewModel());
 
