@@ -162,7 +162,7 @@ function getClickedPlaceDetails(placeid) {
         }
     }
 }
-
+/*
 var mobileMenuString = '<li><a href="#">Browse Places &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' +
  "'place_of_worship'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
  "'campground'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Campgrounds</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
@@ -175,32 +175,27 @@ var mobileMenuString = '<li><a href="#">Browse Places &#9660;</a><ul><li data-bi
  "'bank'" +'),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
  "'library'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
  "'gym'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Gym</a></li><li data-bind="click:function(){emptyPoints(), getPlaces(' + 
- "'beaches'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li></ul></li>';
+ "'beaches'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li></ul></li>';  */
 
-var deskMenuString = '<li><a href="#">Lodging & Dining &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' + 
+/*var deskMenuString = '<li class="cat"><a href="#">Lodging & Dining &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' + 
     "'campground'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Camping</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
     "'lodging'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Lodging</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
     "'restaurant'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li></ul>' +
-    '<li><a href="#">Culture &#9660;</a><ul>' + 
+    '<li class="cat"><a href="#">Culture &#9660;</a><ul>' + 
     '<li data-bind="click: function(){emptyPoints(), initialize(' + 
     "'place_of_worship'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'school'"+ '),closeInfoWindow(),recenterMap()}"><a href="#">Schools</a></li></ul>' +
-    '<li><a href="#">Recreation &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' + "'park'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li><li data-bind="click: function(){emptyPoints(), getPlaces(' + "'beaches'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'aquarium'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'library'" +'),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'movie_theater'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Movie Theater</a></li><li data-bind="click: function(){emptyPoints(), initialize(' +"'gym'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Gym</a></li></ul>' +
-    '<li><a href="#">Government &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' + "'local_government_office'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Local Offices</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'post_office'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li></ul><li><a href="#">Services &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' +"'doctor'" +'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'bank'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li></ul></li><ul>';
+    '<li class="cat" ><a href="#">Recreation &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' + "'park'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li><li data-bind="click: function(){emptyPoints(), getPlaces(' + "'beaches'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'aquarium'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'library'" +'),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'movie_theater'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Movie Theater</a></li><li data-bind="click: function(){emptyPoints(), initialize(' +"'gym'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Gym</a></li></ul>' +
+    '<li class="cat"><a href="#">Government &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' + "'local_government_office'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Local Offices</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'post_office'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li></ul><li><a href="#">Services &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' +"'doctor'" +'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'bank'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li></ul></li><ul>';  
           
 
+
     init = function() {
-                if (window.matchMedia("(min-width: 900px)").matches) {
-                    $('#drop-nav').append(deskMenuString);
-                } else {
-                    $('#drop-nav').append(mobileMenuString);   
-            }
-    };    
-
-
-
-
-
-
+                //if (window.matchMedia("(min-width: 900px)").matches) {
+                    $('#menu-list').append(deskMenuString);
+              //  } else {
+               //     $('#drop-nav').append(mobileMenuString);   
+          //  }
+    };    */
 
 var viewModel = function() {
     var self = this;
@@ -359,6 +354,7 @@ var viewModel = function() {
 
 };
 
-init();
+
+
 ko.applyBindings(viewModel());
 

@@ -15,9 +15,43 @@
     </div>
 
     <div id="menu">  
-      <ul id="drop-nav">
-        
+      <ul id="drop-nav" class="tier1">
+        <li class="cat"><a href="#">&#9751;</a>
+          <ul class="tier2">
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('lodging'),closeInfoWindow(),recenterMap()}"><a href="#">Lodging</a></li>
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('restaurant'),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li>
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('campground'),closeInfoWindow(),recenterMap()}"><a href="#">Camping</a></li>
+          </ul>
+        </li>
+        <li class="cat"><a href="#">&#9774;</a>
+          <ul class="tier2">    
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('place_of_worship'),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li>
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('school'),closeInfoWindow(),recenterMap()}"><a href="#">Schools</a></li>
+          </ul>
+        </li>
+        <li class="cat"><a href="#">&#9787;</a>   
+          <ul class="tier2"> 
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('park'),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li>
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('movie_theater'),closeInfoWindow(),recenterMap()}"><a href="#">Movie Theater</a></li>
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('aquarium'),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li>
+            <li class="sub" data-bind="click: function(){emptyPoints(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li>
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('library'),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li>
+          </ul>
+        </li>
+        <li class="cat"><a href="#">&#9733;</a> 
+          <ul class="tier2">    
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('local_government_office'),closeInfoWindow(),recenterMap()}"><a href="#">Local Offices</a></li>
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('post_office'),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li>
+          </ul>
+        </li>
+        <li class="cat"><a href="#">&#36;</a>
+          <ul class="tier2"> 
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('doctor'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li>
+            <li class="sub" data-bind="click: function(){emptyPoints(), initialize('bank'),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li>   
+          </ul>  
+        </li>
       </ul>
+
     </div>
 
     <div class="row">

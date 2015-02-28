@@ -175,7 +175,7 @@ ul {
 }
 
 #map-canvas {
-	height: 500px;
+	height: 450px;
 }
  /* #menu ul {
   	display: inline;
@@ -185,14 +185,24 @@ ul {
   	position: relative;
   	display: block; */
   }
-  #menu ul li {
+
+ #menu ul li {
   	display: list-item;
   	position: relative;
-  	float: left;
   }
+
+ ul #drop-nav {
+ 	width: 100%;
+ } 
+
+ #menu ul {
+ 	display: table;
+ }
+}
   #menu li:hover ul {
    	display: block; 
    	position: absolute;
+
    }
   #menu ul li a {
     white-space: nowrap; 
@@ -201,15 +211,7 @@ ul {
   #results-display {
   	padding-left: 5px;
   }
-/* #main .container {
-  display: flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  flex-direction: column;
-  -webkit-flex-direction: column;
-}*/
+
 
 
 }
@@ -239,6 +241,7 @@ ul {
   #map-canvas {
     height: 250px;
     width: 100%;
+
   }
 
 
@@ -246,17 +249,15 @@ ul {
     margin-top: 5px;
     margin-bottom: 10px;
   }
-
-
-  #menu ul li a {
-  	font-size: 12px;
-  }
+  
+  
 
   #results li {
   	line-height : 26px;
     min-height: 26px; 
     padding: 2px;
   }
+
  #results li a {
     font-size: 12px;
     line-height : 26px;
