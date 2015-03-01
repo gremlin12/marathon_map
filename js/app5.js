@@ -27,11 +27,14 @@ var model = [
 /* Google Map View */
 
 
+// Set up Google Map 
+
 var map = new google.maps.Map(document.getElementById('map-canvas'), {
         zoom: 13,
         center: {lat: 24.723009, lng: -81.038884}
     }); 
 
+// Define these variables globally for use in several functions.
 
 var markers = [];
 var marker;
@@ -43,19 +46,26 @@ var infoWindowIsOpen = false;
 
 view = {
 
+    // Check width of map to determine which labels to use on navigation menu.
+    // Smaller mobile devices will use icons for menu tabs. 
+
     init : function() {
         var categories = ['lodging', 'culture', 'recreation', 'government', 'services'];
         var icons = ['&#9789;', '&#9774;', '&#9786;', '&#10026;', '&#36;'];
         var labels = ['Eating & Sleeping', 'Culture', 'Recreation', 'Government', 'Services']
-        for (i=0; i<categories.length; i++) {
-            if (window.matchMedia("(min-width: 700px)").matches) {
+        for (i=0; i < categories.length; i++) {
+            if ($('#map-canvas').width() > 525)  {  
                 $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] +'>' + labels[i] + '</a>' );
+                $('#' + categories[i] ).css('text-align', 'left');
             } else {
                 $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] + '>' + icons[i] + '</a>' );  
+                $('#' + categories[i] ).css('text-align', 'center');
+                $('#' + categories[i] ).css('line-height', '30px');
             } 
         }
     },
-
+    
+    // Send a Places Search request to Google when a category tab is clicked in navigation menu. 
     getLocations : function (category) {
         var request = {
             location: map.center,
@@ -63,6 +73,9 @@ view = {
             types: [category]
         };
         service.nearbySearch(request, callback);
+        
+        // Callback function returns Places Search results.
+        // Loop through results and send the data for each place to the createMarker() function.
 
         function callback(results, status) {  
             if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -73,6 +86,9 @@ view = {
             }
         }
 
+        /* This function collects and saves the data needed to create a marker for each place.
+           Later, this data will be used by the addMarkers() function to place markers on the map.
+           Details of each place are saved as variables. */
 
         function createMarker(place) {
             var name = place.name;
@@ -83,12 +99,21 @@ view = {
             var imgUrl = '';
             var placeid = place.place_id;
 
+            // Check if a photo was found by the Places Search before saving as var imgUrl.
+            // If no photo exists, imgUrl =''.
+
             if (place.hasOwnProperty('photos') ) {
                 imgUrl = place.photos[0].getUrl({'maxWidth':100, 'maxHeight':100});
             }
 
-            points.push(new Point(name,lat,long,cat,address,imgUrl,placeid));
+            /* Details of each place are saved as a new Location object (see viewModel) and placed in the locations array. The locations array holds basically the same information as the markers array,
+            but it is ko.observable and needed to make the model-view-viewModel system work. */
 
+            locations.push(new Location(name,lat,long,cat,address,imgUrl,placeid));
+
+            /* Place details are also added to the model. This makes it possible to search
+             for locations after the markers have been removed from the map. It also allows for 
+             custom locations to be created independently of Google's API. */
 
             var obj = {
                 name : name,
@@ -102,6 +127,31 @@ view = {
 
             model.push(obj);
         }  
+    },
+
+    // Add a marker to the map for each place, using data prepared by 
+    // the createMarker() function above. 
+    addMarkers : function(name,lat,long,cat,address,imgUrl,placeid) {
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, long),
+            name: name,
+            map : map,
+            cat : cat,
+            address : address,
+            imgUrl : imgUrl,
+            placeid : placeid
+        });
+        
+        // Make each marker clickable. The click event triggers a series
+        // functions to add content to the infowindow and open it.
+        google.maps.event.addListener(marker, 'click', (function(marker) {
+            return function() {
+            view.sortClickedMarkers(placeid);
+            };
+        })(marker)); 
+    
+        // Each marker's data is saved as a json in the markers array.    
+        markers.push(marker);
     },
 
     getPlaceDetails: function (placeid) {
@@ -122,26 +172,6 @@ view = {
             }            
            
         }
-    },
-
-    addMarkers : function(name,lat,long,cat,address,imgUrl,placeid) {
-        marker = new google.maps.Marker({
-            position: new google.maps.LatLng(lat, long),
-            name: name,
-            map : map,
-            cat : cat,
-            address : address,
-            imgUrl : imgUrl,
-            placeid : placeid
-        });
-
-        google.maps.event.addListener(marker, 'click', (function(marker) {
-            return function() {
-            view.sortClickedMarkers(placeid);
-            };
-        })(marker)); 
-    
-        markers.push(marker);
     },
 
     sortClickedMarkers : function (placeid) {
@@ -185,11 +215,11 @@ view = {
 
 var viewModel = function() {
     var self = this;
-    this.points = ko.observableArray([]);
+    this.locations = ko.observableArray([]);
     this.query = ko.observable('');
     
     
-    this.Point = function (name, lat, long, cat, address, imgUrl,placeid) {
+    this.Location = function (name, lat, long, cat, address, imgUrl,placeid) {
         this.name = ko.observable(name);
         this.lat = lat;
         this.long = long;
@@ -200,20 +230,20 @@ var viewModel = function() {
         view.addMarkers(name, lat, long, cat, address, imgUrl,placeid);
     };
 
-    this.emptyPoints = function() {
+    this.emptyLocations = function() {
          self.recenterMap();
          for (var i=0; i< markers.length; i++){
            markers[i].setMap(null);
          }
          markers.length = 0;  
-         self.points.removeAll();
+         self.locations.removeAll();
     };
     
     this.getPlaces = function(category){
         for (var place in model) {
             for(i=0; i < model[place].cat.length; i++) {
                 if (model[place].cat[i] ===category) {
-                    points.push(new Point(model[place].name, model[place].lat, model[place].long, model[place].cat, model[place].address, model[place].imgUrl, model[place].placeid));  
+                    locations.push(new Location(model[place].name, model[place].lat, model[place].long, model[place].cat, model[place].address, model[place].imgUrl, model[place].placeid));  
                 }
             }           
         }    
@@ -249,8 +279,8 @@ var viewModel = function() {
         var search = this.query().toLowerCase();
         for (place in model) {
             if (model[place].name.toLowerCase() === search) {
-                self.emptyPoints();
-                points.push(new Point(model[place].name, model[place].lat, model[place].long, model[place].cat, model[place].address, model[place].imgUrl, model[place].placeid));
+                self.emptyLocations();
+                locations.push(new Location(model[place].name, model[place].lat, model[place].long, model[place].cat, model[place].address, model[place].imgUrl, model[place].placeid));
             }             
         }
         self.closeInfoWindow();
@@ -258,18 +288,6 @@ var viewModel = function() {
 
     }; 
 
-
-
-    // The following fix is from Steve Michelotti's blog
-
-   /* this.searchOnEnter = function() {
-        var keyCode = (event.which ? event.which : event.keyCode);
-            if (event.keyCode === 13) {
-                this.searchPlaces();
-                return false;
-            }
-            return true;
-    }; */
 
     this.closeInfoWindow = function() {
         if (infoWindowIsOpen === true) {
@@ -287,7 +305,8 @@ var viewModel = function() {
                 var currentName = model[place].name;
                 var currentAddress = model[place].address;
 
-                if (window.matchMedia("(min-width: 400px)").matches) {
+                //if (window.matchMedia("(min-width: 400px)").matches) {
+                if ($('#map-canvas').height() >= 350) {  
                     var currentImage = model[place].imgUrl;
                 } else {
                     currentImage = '';

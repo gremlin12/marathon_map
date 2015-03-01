@@ -18,36 +18,36 @@
       <ul id="drop-nav" class="tier1">
         <li class="cat"><a href="#" id="lodging">1</a>
           <ul class="tier2">
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('lodging'),closeInfoWindow(),recenterMap()}"><a href="#">Lodging</a></li>
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('restaurant'),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li>
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('campground'),closeInfoWindow(),recenterMap()}"><a href="#">Camping</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('lodging'),closeInfoWindow(),recenterMap()}"><a href="#">Lodging</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('restaurant'),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('campground'),closeInfoWindow(),recenterMap()}"><a href="#">Camping</a></li>
           </ul>
         </li>
         <li class="cat"><a href="#" id="culture">2</a>
           <ul class="tier2">    
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('place_of_worship'),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li>
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('school'),closeInfoWindow(),recenterMap()}"><a href="#">Schools</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('place_of_worship'),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('school'),closeInfoWindow(),recenterMap()}"><a href="#">Schools</a></li>
           </ul>
         </li>
         <li class="cat"><a href="#" id="recreation">3</a>   
           <ul class="tier2"> 
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('park'),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li>
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('movie_theater'),closeInfoWindow(),recenterMap()}"><a href="#">Movie Theater</a></li>
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('aquarium'),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li>
-            <li class="sub" data-bind="click: function(){emptyPoints(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li>
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('library'),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('park'),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('movie_theater'),closeInfoWindow(),recenterMap()}"><a href="#">Movie Theater</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('aquarium'),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('library'),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li>
           </ul>
         </li>
         <li class="cat"><a href="#" id="government">4</a> 
           <ul class="tier2">    
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('local_government_office'),closeInfoWindow(),recenterMap()}"><a href="#">Local Offices</a></li>
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('post_office'),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('local_government_office'),closeInfoWindow(),recenterMap()}"><a href="#">Local Offices</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('post_office'),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li>
           </ul>
         </li>
         <li class="cat"><a href="#" id="services">5</a>
           <ul class="tier2"> 
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('doctor'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li>
-            <li class="sub" data-bind="click: function(){emptyPoints(), view.getLocations('bank'),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li>   
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('doctor'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('bank'),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li>   
           </ul>  
         </li>
       </ul>
@@ -62,13 +62,14 @@
           <input type="search" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
           <button type="button" data-bind="click: searchPlaces()"> Search </button>
         </form>
-        <button type="button" class="search" data-bind="click: recenterMap()">Reset Map</button>
+        <button type="button" class="search" data-bind="click: recenterMap()">Recenter Map</button>
+        <button type="button" class="search" data-bind="click: emptyLocations()">Clear Map</button>
       </div> 
     </div> <!--end of map-area-->
   
     <div id="results-display" class="col-3 end">
       <div id="results">  
-        <ul data-bind="foreach: points">
+        <ul data-bind="foreach: locations">
         <li ><a href="#" data-bind="text: name, click: function(){closeInfoWindow(),sortPlaces(placeid)}"></a></li>
         </ul>
       </div>

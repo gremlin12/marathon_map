@@ -1,15 +1,49 @@
 
 
+/* Page Layout */
+
 body {
     height: 100%;
     padding: 0;
 }
 
-h1 {
-    font-family: courier, sans-serif;
+ * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.grid {
+  margin: 0 auto;
+  max-width: 1200px;
+  width:100%
+}
+
+.row {
+  width: 100%;
+  margin-bottom:20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col-3 {
+  width:30%
+}
+
+.col-9 {
+  width:70%
+}
+
+.col-10 {
+}
+
+.col-12 {
+  width:100%
 }
 
 
+/* Map  */
 
 #map-canvas {
     display: block;
@@ -18,209 +52,191 @@ h1 {
     float: left;
 }
 
+/* Dropdown Menu (adapted from James Richardson's tutorial
+   at http://www.inmotionhosting.com/support/edu/website-design/using-css/simple-css-drop-down-menu */
+
 ul {
     padding:0;
 }
 
-/* Dropdown Menu (adapted from James Richardson's tutorial
-   at http://www.inmotionhosting.com/support/edu/website-design/using-css/simple-css-drop-down-menu */
+#menu ul {
+  list-style: none; 
+  display: table; 
+  padding: 0px;
+  margin: 0px;
+}
 
-  #menu ul {list-style: none;padding: 0px;margin: 0px;}
-  #menu ul li {max-width: 160px; display: block;position: relative;float: left;border:1px solid #000; z-index: 99999;}
-  #menu li ul {display: none;}
-  #menu ul li a {display: block;background: #7887AB;padding: 5px 10px 5px 10px;text-decoration: none;
-           white-space: nowrap; font-family: helvetica, sans-serif; font-size: 16px; color: #fff;}
-  #menu ul li a:hover {background: #7887AB;}
-  #menu li:hover ul {display: block; position: absolute;}
-  #menu li:hover li {float: none;}
-  #menu li:hover a {background: #7887AB;}
-  #menu li:hover li a:hover {background: #669999;}
- 
-  #drop-nav li ul li {border-top: 0px;}
+#menu ul li {
+  max-width: 160px; 
+  min-width: 50px; 
+  display: block;
+  position: relative;
+  float: left;
+  border:1px solid #000; 
+  z-index: 99999;
+}
+
+#menu li ul {
+  display: none;
+}
+
+#menu ul li a {
+  display: block;
+  background: #7887AB;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  text-align: left; 
+  white-space: nowrap; 
+  font-family: helvetica, sans-serif; 
+  font-size: 16px; 
+  color: #fff;
+}
+
+#menu ul li a:hover {
+  background: #7887AB;
+}
+
+#menu li:hover ul {
+  display: block; position: absolute;
+}
+
+#menu li:hover li {
+  float: none;
+}
+
+#menu li:hover a {
+  background: #7887AB;
+}
+
+#menu li:hover li a:hover {
+  background: #669999;
+}
+
+#drop-nav li ul li {
+  border-top: 0px;
+}
+
+
+/* Search Bar */
+
+.search {
+  display: inline;
+  position: relative;
+}
+
+/* Results Display */
+
+#results-display {
+  padding-left: 5px;
+}
+
+#results li {
+  display: inline;
+  color: black;
+  line-height : 30px;
+  min-height: 30px;
+  padding: 5px;
+  position: relative;
+  background-color: #FDD1AA;
+  white-space: pre;
+}
+
+
+#results li a {
+  line-height: 30px;
+  padding: 5px;
+  color: black;
+  font-family: helvetica, sans-serif; 
+  font-size: 14px;
+}
+
+#results li:nth-child(odd) {
+  background-color: #FFE3AA;
+}
+
+#results li:hover {
+  background-color: #7887AB;
+  color: white;
+  padding: 5px;
+}
+
+#results li a:link {
+  text-decoration: none;
+}
+
+#results li a:hover {
+  color: white;
+
+} 
+
+/* Content Styling */
+
+.bold {
+  font-weight: bold;
+}
 
 .hidden {
     visibility: hidden;
 }
 
-
-
-/*#menu {
-    margin: 0;
+h1 {
+  font-family: Courier, "Lucida Console", Monaco, arial, monospace;	
 }
 
-#menu li {
-    color: white;
-    display: inline;
-    line-height: 30px;
-    min-height: 30px;
-    padding: 5px;
-    position: relative;
-    background-color: #669999;
-    white-space: pre;
-
-
-}
-
-
-#menu li:nth-child(odd){
-    background-color: #7887AB;
-} */
-
-.search {
-    display: inline;
-    position: relative;
-}
-
-#results li {
-    display: inline;
-    color: black;
-    line-height : 30px;
-    min-height: 30px;
-    padding: 5px;
-    position: relative;
-    background-color: #FDD1AA;
-    white-space: pre;
-}
-
-#results li a {
-	line-height: 30px;
-	padding: 5px;
-	color: black;
-	font-family: helvetica, sans-serif; 
-	font-size: 14px;
-}
-
-#results li:nth-child(odd) {
-    background-color: #FFE3AA;
-}
-
-#results li:hover {
-	background-color: #7887AB;
-	color: white;
-	padding: 5px;
-}
-
-#results li a:link {
-	text-decoration: none;
-}
-
-#results li a:hover {
-	color: white;
-
-} 
-
-.bold {
-    font-weight: bold;
-}
-
+/* Mobile Friendly */
 
 @media only screen and (max-width: 1024px) {
 
-}
-
-@media only screen and (min-width: 900px) {
-
-  * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.grid {
-  margin: 0 auto;
-  max-width: 1200px;
-  width:100%
-}
-.row {
-  width: 100%;
-  margin-bottom:20px;
-  display: flex;
-  flex-wrap: wrap;
-}
-.col-1 {
-  width: 8.33%;
-}
-.col-2 {
-  width:16.66%
-}
-.col-3 {
-  width:25%
-}
-.col-4 {
-  width:33.33%
-}
-.col-5 {
-  width:41.66%
-}
-.col-6 {
-  width:50%
-}
-.col-7 {
-  width:58.33%
-}
-.col-8 {
-  width:66.66%
-}
-.col-9 {
-  width:75%
-}
-.col-10 {
-  width:83.33%
-}
-.col-11 {
-  width:91.66%
-}
-.col-12 {
-  width:100%
-}
-
-#map-canvas {
-	height: 450px;
-}
- /* #menu ul {
-  	display: inline;
-  } */	
-  /*#menu ul {
-  	list-style: none;
-  	position: relative;
-  	display: block; */
+  .col-3 {
+    width:40%
   }
 
- #menu ul li {
-  	display: list-item;
-  	position: relative;
+  .col-9 {
+    width:60%
   }
-
- ul #drop-nav {
- 	width: 100%;
- } 
-
- #menu ul {
- 	display: table;
- }
-}
-  #menu li:hover ul {
-   	display: block; 
-   	position: absolute;
-
-   }
-  #menu ul li a {
-    white-space: nowrap; 
-  }
-
-  #results-display {
-  	padding-left: 5px;
-  }
-
-
 
 }
 
-@media only screen and (max-width:900px) {
+@media only screen and (max-width: 900px) {
+
+  .col-3 {
+    width:40%
+  }
+
+  .col-9 {
+    width:60%
+  }
 
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (max-width: 750px) {
+
+  .col-3 {
+    width:45%
+  }
+
+  .col-9 {
+    width:55%
+  }
+
+  #map-canvas {
+	height: 350px;
+  }
+ 
+
+  #menu li {
+  	line-height: 30px;
+  	min-height: 30px;
+  	min-width: 40px;
+  }
+
+  #menu li a {
+  	font-style: normal;
+  	line-height: 30px;
+  	min-width: 40px;
+  	text-align: center;
+  }
+
 
 }
 
@@ -231,18 +247,22 @@ ul {
     padding: 0;
   }
 
+  .col-3 {
+    width:0%;
+  }
+
+  .col-9 {
+    width:100%;
+  }
+
   h1 {
     margin-top: 5px;
     margin-bottom: 5px;
-
   }
 
   #map-canvas {
     height: 250px;
-    width: 100%;
-
   }
-
 
   ul {
     margin-top: 5px;
@@ -275,7 +295,6 @@ ul {
   }
 
  #results li:hover {
-    /*line-height: 26px;*/
     padding: 2px;
     
  }
