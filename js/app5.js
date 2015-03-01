@@ -28,9 +28,10 @@ var model = [
 
 
 var map = new google.maps.Map(document.getElementById('map-canvas'), {
-    zoom: 13,
-    center: {lat: 24.723009, lng: -81.038884}
-});
+        zoom: 13,
+        center: {lat: 24.723009, lng: -81.038884}
+    }); 
+
 
 var markers = [];
 var marker;
@@ -40,171 +41,147 @@ var infowindow = new google.maps.InfoWindow();
 var infoWindowIsOpen = false;
 
 
+view = {
 
-function initialize(category) {
-    var request = {
-        location: map.center,
-        radius: '20000',
-        types: [category]
-    };
-    service.nearbySearch(request, callback);
-
-    function callback(results, status) {  
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
-                var place = results[i];
-                createMarker(results[i]);
-            }
-        }
-    }
-
-    function createMarker(place) {
-        var name = place.name;
-        var lat = place.geometry.location.lat();
-        var long = place.geometry.location.lng();
-        var address = place.vicinity;
-        var cat = request.types;
-        var imgUrl = '';
-        var placeid = place.place_id;
-
-        if (place.hasOwnProperty('photos') ) {
-            imgUrl = place.photos[0].getUrl({'maxWidth':100, 'maxHeight':100});
-        }
-
-        points.push(new Point(name,lat,long,cat,address,imgUrl,placeid));
-
-
-        var obj = {
-            name : name,
-            lat : lat,
-            long : long,
-            cat : cat,
-            address : address,
-            imgUrl : imgUrl,
-            placeid : placeid
-        }
-
-        model.push(obj);
-    }
-    $('#more').removeClass('hidden');
-}
-
-function getPlaceDetails(placeid) {
-    var phoneNumber ='';
-    var website = '';
-    
-    var request = {
-        placeId : placeid()
-    }
-    service.getDetails(request, callback);
-    function callback(place, status) {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-            var name = place.name;
-            phoneNumber = place.formatted_phone_number;
-            website = place.website;
-            placeid = place.place_id;
-            openInfoWindow(phoneNumber, placeid, website);
-        }            
-           
-    }
-}    
-
-function addMarkers(name,lat,long,cat,address,imgUrl,placeid) {
-    marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, long),
-        name: name,
-        map : map,
-        cat : cat,
-        address : address,
-        imgUrl : imgUrl,
-        placeid : placeid
-    });
-
-    google.maps.event.addListener(marker, 'click', (function(marker) {
-        return function() {
-          sortClickedMarkers(placeid);
-        };
-    })(marker)); 
-    
-    markers.push(marker);
-}
-
-function sortClickedMarkers(placeid) {
-    if (ko.utils.unwrapObservable(placeid).length > 6) {
-        getClickedPlaceDetails(placeid);
-    }
-    else {
-    for (var place in model) {
-        if (model[place].placeid === ko.utils.unwrapObservable(placeid)) {
-            var phoneNumber = model[place].phoneNumber;
-            var website = model[place].website;
-            openInfoWindow(phoneNumber, ko.utils.unwrapObservable(placeid), website); 
-        }
-    } 
-    } 
-}
-
-function getClickedPlaceDetails(placeid) {
-    var phoneNumber ='';
-    var website = '';
-
-    var request = {
-        placeId : placeid
-    }
-    service.getDetails(request, callback);
-    function callback(place, status) {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-            phoneNumber = place.formatted_phone_number;
-            website = place.website;
-            var name = place.name;
-            placeid = place.place_id;
-            openInfoWindow(phoneNumber, placeid, website);
-        }
-    }
-}
-
-
-
-/*
-var mobileMenuString = '<li><a href="#">Browse Places &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' +
- "'place_of_worship'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
- "'campground'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Campgrounds</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
- "'local_government_office'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Government Offices</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
- "'park'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
- "'post_office'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
- "'aquarium'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
- "'school'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Schools</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
- "'doctor'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
- "'bank'" +'),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
- "'library'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
- "'gym'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Gym</a></li><li data-bind="click:function(){emptyPoints(), getPlaces(' + 
- "'beaches'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li></ul></li>';  */
-
-/*var deskMenuString = '<li class="cat"><a href="#">Lodging & Dining &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' + 
-    "'campground'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Camping</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
-    "'lodging'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Lodging</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + 
-    "'restaurant'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li></ul>' +
-    '<li class="cat"><a href="#">Culture &#9660;</a><ul>' + 
-    '<li data-bind="click: function(){emptyPoints(), initialize(' + 
-    "'place_of_worship'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'school'"+ '),closeInfoWindow(),recenterMap()}"><a href="#">Schools</a></li></ul>' +
-    '<li class="cat" ><a href="#">Recreation &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' + "'park'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li><li data-bind="click: function(){emptyPoints(), getPlaces(' + "'beaches'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'aquarium'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'library'" +'),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'movie_theater'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Movie Theater</a></li><li data-bind="click: function(){emptyPoints(), initialize(' +"'gym'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Gym</a></li></ul>' +
-    '<li class="cat"><a href="#">Government &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' + "'local_government_office'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Local Offices</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'post_office'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li></ul><li><a href="#">Services &#9660;</a><ul><li data-bind="click: function(){emptyPoints(), initialize(' +"'doctor'" +'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li><li data-bind="click: function(){emptyPoints(), initialize(' + "'bank'" + '),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li></ul></li><ul>';  
-          
-*/
-
-    init = function() {
+    init : function() {
         var categories = ['lodging', 'culture', 'recreation', 'government', 'services'];
         var icons = ['&#9789;', '&#9774;', '&#9786;', '&#10026;', '&#36;'];
         var labels = ['Eating & Sleeping', 'Culture', 'Recreation', 'Government', 'Services']
         for (i=0; i<categories.length; i++) {
-                if (window.matchMedia("(min-width: 400px)").matches) {
-                    $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] +'>' + labels[i] + '</a>' );
-                } else {
-                    $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] + '>' + icons[i] + '</a>' );  
-                } 
+            if (window.matchMedia("(min-width: 700px)").matches) {
+                $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] +'>' + labels[i] + '</a>' );
+            } else {
+                $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] + '>' + icons[i] + '</a>' );  
+            } 
+        }
+    },
+
+    getLocations : function (category) {
+        var request = {
+            location: map.center,
+            radius: '20000',
+            types: [category]
+        };
+        service.nearbySearch(request, callback);
+
+        function callback(results, status) {  
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                for (var i = 0; i < results.length; i++) {
+                    var place = results[i];
+                    createMarker(results[i]);
+                }
+            }
         }
 
-    };    
+
+        function createMarker(place) {
+            var name = place.name;
+            var lat = place.geometry.location.lat();
+            var long = place.geometry.location.lng();
+            var address = place.vicinity;
+            var cat = request.types;
+            var imgUrl = '';
+            var placeid = place.place_id;
+
+            if (place.hasOwnProperty('photos') ) {
+                imgUrl = place.photos[0].getUrl({'maxWidth':100, 'maxHeight':100});
+            }
+
+            points.push(new Point(name,lat,long,cat,address,imgUrl,placeid));
+
+
+            var obj = {
+                name : name,
+                lat : lat,
+                long : long,
+                cat : cat,
+                address : address,
+                imgUrl : imgUrl,
+                placeid : placeid
+            }
+
+            model.push(obj);
+        }  
+    },
+
+    getPlaceDetails: function (placeid) {
+        var phoneNumber ='';
+        var website = '';
+    
+        var request = {
+            placeId : placeid()
+        }
+        service.getDetails(request, callback);
+        function callback(place, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                var name = place.name;
+                phoneNumber = place.formatted_phone_number;
+                website = place.website;
+                placeid = place.place_id;
+                openInfoWindow(phoneNumber, placeid, website);
+            }            
+           
+        }
+    },
+
+    addMarkers : function(name,lat,long,cat,address,imgUrl,placeid) {
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, long),
+            name: name,
+            map : map,
+            cat : cat,
+            address : address,
+            imgUrl : imgUrl,
+            placeid : placeid
+        });
+
+        google.maps.event.addListener(marker, 'click', (function(marker) {
+            return function() {
+            view.sortClickedMarkers(placeid);
+            };
+        })(marker)); 
+    
+        markers.push(marker);
+    },
+
+    sortClickedMarkers : function (placeid) {
+        if (ko.utils.unwrapObservable(placeid).length > 6) {
+            view.getClickedPlaceDetails(placeid);
+        }
+        else {
+            for (var place in model) {
+                if (model[place].placeid === ko.utils.unwrapObservable(placeid)) {
+                    var phoneNumber = model[place].phoneNumber;
+                    var website = model[place].website;
+                    openInfoWindow(phoneNumber, ko.utils.unwrapObservable(placeid), website); 
+                }
+            } 
+        } 
+    }, 
+
+    getClickedPlaceDetails : function (placeid) {
+        var phoneNumber ='';
+        var website = '';
+
+        var request = {
+            placeId : placeid
+        }
+        service.getDetails(request, callback);
+        function callback(place, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                phoneNumber = place.formatted_phone_number;
+                website = place.website;
+                var name = place.name;
+                placeid = place.place_id;
+                openInfoWindow(phoneNumber, placeid, website);
+            }
+        }
+    }
+}
+
+
+/* View Model */
+
 
 var viewModel = function() {
     var self = this;
@@ -220,7 +197,7 @@ var viewModel = function() {
         this.imgUrl = ko.observable(imgUrl);
         this.placeid = ko.observable(placeid);
 
-        addMarkers(name, lat, long, cat, address, imgUrl,placeid);
+        view.addMarkers(name, lat, long, cat, address, imgUrl,placeid);
     };
 
     this.emptyPoints = function() {
@@ -244,7 +221,7 @@ var viewModel = function() {
 
     this.sortPlaces = function(placeid) {
         if (ko.utils.unwrapObservable(placeid).length > 6) {
-            getPlaceDetails(placeid);
+            view.getPlaceDetails(placeid);
         }
 
         else {
@@ -361,6 +338,6 @@ var viewModel = function() {
 
 };
 
-init();
+view.init();
 ko.applyBindings(viewModel());
 
