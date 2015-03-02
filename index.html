@@ -13,20 +13,25 @@
     <div id="header">
       <h1>Marathon Map</h1>
     </div>
-
     <div id="menu">  
       <ul id="drop-nav" class="tier1">
-        <li class="cat"><a href="#" id="lodging">1</a>
+        <li class="cat"><a href="#" id="hospitality">1</a>
           <ul class="tier2">
             <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('lodging'),closeInfoWindow(),recenterMap()}"><a href="#">Lodging</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('restaurant'),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li>
             <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('campground'),closeInfoWindow(),recenterMap()}"><a href="#">Camping</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('restaurant'),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li>           
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('cafe'),closeInfoWindow(),recenterMap()}"><a href="#">Cafes</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('meal_takeaway'),closeInfoWindow(),recenterMap()}"><a href="#">Fast Food</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('meal_delivery'),closeInfoWindow(),recenterMap()}"><a href="#">Delivery</a></li>
           </ul>
         </li>
         <li class="cat"><a href="#" id="culture">2</a>
           <ul class="tier2">    
             <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('place_of_worship'),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li>
             <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('school'),closeInfoWindow(),recenterMap()}"><a href="#">Schools</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('art_gallery'),closeInfoWindow(),recenterMap()}"><a href="#">Art Gallery</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('library'),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('museum'),closeInfoWindow(),recenterMap()}"><a href="#">Museum</a></li>
           </ul>
         </li>
         <li class="cat"><a href="#" id="recreation">3</a>   
@@ -35,32 +40,38 @@
             <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('movie_theater'),closeInfoWindow(),recenterMap()}"><a href="#">Movie Theater</a></li>
             <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('aquarium'),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li>
             <li class="sub" data-bind="click: function(){emptyLocations(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('library'),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('bicycle_store'),closeInfoWindow(),recenterMap()}"><a href="#">Bike Rental</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('gym'),closeInfoWindow(),recenterMap()}"><a href="#">Gym</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('amusement_park'),closeInfoWindow(),recenterMap()}"><a href="#">Amusement Parks</a></li>
           </ul>
         </li>
         <li class="cat"><a href="#" id="government">4</a> 
           <ul class="tier2">    
             <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('local_government_office'),closeInfoWindow(),recenterMap()}"><a href="#">Local Offices</a></li>
             <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('post_office'),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('police'),closeInfoWindow(),recenterMap()}"><a href="#">Police</a></li>
           </ul>
         </li>
         <li class="cat"><a href="#" id="services">5</a>
           <ul class="tier2"> 
             <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('doctor'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('bank'),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li>   
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('dentist'),closeInfoWindow(),recenterMap()}"><a href="#">Dentists</a></li> 
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('bank'),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li>
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('bus_station'),closeInfoWindow(),recenterMap()}"><a href="#">Bus</a></li>            
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('car_rental'),closeInfoWindow(),recenterMap()}"><a href="#">Car Rental</a></li> 
+            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('convenience_store'),closeInfoWindow(),recenterMap()}"><a href="#">Convenience</a></li> 
           </ul>  
         </li>
       </ul>
 
     </div>
-
     <div class="row">
-    <div id="map-area" class="col-9">
+      <div id="map-area" class="col-9">
       <div id="map-canvas"></div>
       <div id="searchbar">
         <form class="search">
           <input type="search" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
-          <button type="button" data-bind="click: searchPlaces()"> Search </button>
+          <button type="button" data-bind="click: searchBox()"> Search </button>
         </form>
         <button type="button" class="search" data-bind="click: recenterMap()">Recenter Map</button>
         <button type="button" class="search" data-bind="click: emptyLocations()">Clear Map</button>
@@ -80,9 +91,9 @@
 
   <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UpkOItdYcObCcD9-pQ2tGBAkm7XjOPI"></script>-->
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UpkOItdYcObCcD9-pQ2tGBAkm7XjOPI&libraries=places"></script>
-  <script src="js/knockout-3.2.0.js"></script>
+  <script async src="js/knockout-3.2.0.js"></script>
   <script src="js/jquery-1.11.2.min.js"></script>
-  <script src="js/app5.js"></script>
+  <script async src="js/app5.js"></script>
   
 
 
