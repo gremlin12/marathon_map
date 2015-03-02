@@ -69,7 +69,7 @@ view = {
                 $('#' + categories[i] ).css('line-height', '30px');
             } 
         }
-    },
+    }, 
     
     // Send a Places Search request to Google when a category tab is clicked in navigation menu. 
     getLocations : function (category) {
