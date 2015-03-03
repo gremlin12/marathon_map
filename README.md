@@ -23,13 +23,12 @@ To see a live demo of the map, visit http://gremlin12.github.io/marathon_map/
    3. Make sure you have an internet connection -- the map won't work without it!
    4. Open the index.html file in your browser. You should see the map appear.
    5. Hover over the navigation menu tabs to see the categories drop down.
-   6. Select a category by clicking it. You should see markers appear on the map and
-   location names to the side of the map (or below it if you are using
-   a mobile device).
+   6. Select a category by clicking it. Markers should appear on the map-canvas and
+   location names to the side of the map (or below it if you are using a mobile device).
    7. Click on a marker or a location name to open an information window with basic details
    about the place.
    8. Once a location has been rezzed on the map, its details are saved. To retrieve the
-   location, you can type its name in the search bar and click the search button. (You
+   location, type its name in the search bar and click the search button. (You
    must type the entire name.)
 
 ** Caveats **
@@ -45,7 +44,8 @@ when using Marathon Map.
 
 - The drop-down navigation menu is adapted from from James Richardson's tutorial at http://www.inmotionhosting.com/support/edu/website-design/using-css/simple-css-drop-down-menu 
 - Thanks to Piotr Zalewa and Oskar Krawczyk for their JSFiddle "Observable with Google Map
-   Marker," which was helpful in integrating Knockout.js with Google Maps API.
+   Marker," which was helpful in integrating Knockout.js with Google Maps API: 
+http://jsfiddle.net/gizzat/ADexG/
 
 
 
