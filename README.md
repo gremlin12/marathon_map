@@ -26,8 +26,8 @@ To see a live demo of the map, visit http://gremlin12.github.io/marathon_map/
    6. Select a category by clicking it. You should see markers appear on the map and
    location names to the side of the map (or below it if you are using
    a mobile device).
-   7. Click on a marker or a location name and you should see an information window
-   pop up with basic details about the place.
+   7. Click on a marker or a location name to open an information window with basic details
+   about the place.
    8. Once a location has been rezzed on the map, its details are saved. To retrieve the
    location, you can type its name in the search bar and click the search button. (You
    must type the entire name.)
