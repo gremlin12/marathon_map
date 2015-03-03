@@ -1,3 +1,5 @@
+/* Marathon Map */
+
 /* Model */
 
 //   Custom locations can be added independently of Google Places by adding data manually
@@ -40,8 +42,6 @@ var map = new google.maps.Map(document.getElementById('map-canvas'), {
         center: {lat: 24.723009, lng: -81.038884}
     }); 
 
-//var marathon = new google.maps.LatLng(24.723009, -81.038884);
-
 // Define these variables globally for use in several functions.
 
 var markers = [];
@@ -50,7 +50,6 @@ var request;
 var service = new google.maps.places.PlacesService(map);
 var infowindow = new google.maps.InfoWindow();
 var infoWindowIsOpen = false;
-
 
 
 view = {
@@ -115,8 +114,10 @@ view = {
                 imgUrl = place.photos[0].getUrl({'maxWidth':100, 'maxHeight':100});
             }
 
-            /* Details of each place are saved as a new Location object (see viewModel) and placed in the locations array. The locations array holds basically the same information as the markers array,
-            but it is ko.observable and needed to make the model-view-viewModel system work. */
+            /* Details of each place are saved as a new Location object (see viewModel) and placed
+              in the locations array. The locations array holds basically the same information as 
+              the markers array, but it is ko.observable and needed to make the model-view-viewModel 
+              system work. */
 
             locations.push(new Location(name,lat,long,cat,address,imgUrl,placeid));
 
@@ -195,8 +196,8 @@ view = {
     /* The next two functions are triggered when a user clicks on a map-marker. The function
        sortClickedMarkers() checks whether the clicked marker represents a custom location  
        from the model or a Google Places location delivered by Google's API. If the marker 
-       belongs to a Google location, the getClickedPlaceDetails() is called. If it belongs 
-       to a custom location, the phone number and website are collected from the model and 
+       belongs to a Google location, getClickedPlaceDetails() is called. If it belongs 
+       to a custom location, the phone number and website URL are collected from the model and 
        sent straight to the openInfoWindow() function. */
 
     sortClickedMarkers : function (placeid) {
@@ -427,7 +428,7 @@ var viewModel = function() {
             'center' : {lat: currentLat, lng: currentLong}
         });
 
-        // Scroll to top of screen to see the map.
+        // Scroll to the top of the screen to see the map.
         $('html, body').animate({ scrollTop: 0 }, 'fast');
     };
 
@@ -435,6 +436,8 @@ var viewModel = function() {
 
 view.init();
 ko.applyBindings(viewModel());
+
+// Adjust menu styling automatically when screen sizes changes.
 $( window ).resize(function() {
   view.init();
 });

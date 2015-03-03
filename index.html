@@ -31,10 +31,10 @@
     <div id="header">
       <h1>Marathon Map</h1>
     </div>
-    <div id="menu">  
-      <ul id="drop-nav">
-        <li ><a href="#" id="hospitality">&#9660;</a>
-          <ul>
+    <div id="menu"> <!-- Drop-down menu starts here -->
+      <ul id="drop-nav"> 
+        <li ><a href="#" id="hospitality">&#9660;</a> <!-- Clickable menu tab displays categories below-->
+          <ul> <!-- Each list item contains one category. Add new list items to customize -->
             <li data-bind="click: function(){emptyLocations(), view.getLocations('lodging'),closeInfoWindow(),recenterMap()}"><a href="#">Lodging</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('campground'),closeInfoWindow(),recenterMap()}"><a href="#">Camping</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('restaurant'),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li>           
@@ -74,7 +74,7 @@
           <ul> 
             <li data-bind="click: function(){emptyLocations(), view.getLocations('doctor'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('dentist'),closeInfoWindow(),recenterMap()}"><a href="#">Dentists</a></li> 
-            <li data-bind="click: function(){emptyLocations(), view.getLocations('bank'),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('atm'),closeInfoWindow(),recenterMap()}"><a href="#">ATM</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('bus_station'),closeInfoWindow(),recenterMap()}"><a href="#">Bus</a></li>            
             <li data-bind="click: function(){emptyLocations(), view.getLocations('car_rental'),closeInfoWindow(),recenterMap()}"><a href="#">Car Rental</a></li> 
             <li data-bind="click: function(){emptyLocations(), view.getLocations('convenience_store'),closeInfoWindow(),recenterMap()}"><a href="#">Food Mart</a></li> 
@@ -84,7 +84,7 @@
 
     </div>
     <div class="row">
-      <div id="map-area" class="col-9">
+      <div id="map-area" class="col-9"> 
       <div id="map-canvas"></div>
       <div id="searchbar">
         <form class="search">
@@ -96,7 +96,7 @@
       </div> 
     </div> <!--end of map-area-->
   
-    <div id="results-display" class="col-3 end">
+    <div id="results-display" class="col-3 end"> 
       <div id="results">  
         <ul data-bind="foreach: locations">
         <li ><a href="#" data-bind="text: name, click: function(){closeInfoWindow(),sortPlaces(placeid)}"></a></li>
