@@ -7,8 +7,8 @@ opportunities -- users immediately see up to twenty relevant locations displayed
 Clicking on a map marker or a location name reveals additional information about each individual
 attraction. 
 
-The project relies on the Google Maps API and Places Library for its basic functionality and
-and content. The Knockout.js and jQuery libraries provide additional structure and streamlining.
+The project relies on the Google Maps API and Places Library for its basic functionality and 
+content. The Knockout.js and jQuery libraries provide additional structure and streamlining.
 
 While the current project focuses on Marathon, the application can be customized for any
 city or region simply by changing the map-center coordinates in the main javascript file. 
