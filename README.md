@@ -34,11 +34,19 @@ To see a live demo of the map, visit http://gremlin12.github.io/marathon_map/
 
 ** Caveats **
    
-   The application relies on the Google Maps API and Google Places Library for its content.
+This application relies on the Google Maps API and Google Places Library for its content.
 Google's algorithms are not infallible and can occasionally return information that is 
 incomplete, misleading, or wrong. For example, a city park may appear to be at city 
 hall instead of at its actual physical location. Or you may see duplicate markers
 for the same school or business.  Please be mindful of the technology's limitations
 when using Marathon Map.
+
+** Acknowledgements **
+
+- The drop-down navigation menu is adapted from from James Richardson's tutorial at http://www.inmotionhosting.com/support/edu/website-design/using-css/simple-css-drop-down-menu 
+- Thanks to Piotr Zalewa and Oskar Krawczyk for their JSFiddle "Observable with Google Map
+   Marker," which was helpful in integrating Knockout.js with Google Maps API.
+
+
 
 
