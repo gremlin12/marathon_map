@@ -8,7 +8,7 @@
   <style>
     body {height: 100%;padding: 0;}
     * {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;box-sizing: border-box;}
-    .grid {margin: 0 100px;max-width: 1200px;width:100%} .row {width: 100%;margin-bottom:20px;display: flex;flex-wrap: wrap;}
+    .grid {margin: 0 auto;max-width: 1200px;width:100%} .row {width: 100%;margin-bottom:20px;display: flex;flex-wrap: wrap;}
     .col-3 {width:30%} .col-9 {width:70%}.col-12 {width:100%}
     #map-canvas {display: block; height: 400px; width: 100%; float: left;}
     ul {padding:0;}
@@ -24,65 +24,63 @@
     #drop-nav li ul li {border-top: 0px;}
     .search {display: inline; position: relative;}
     @media only screen and (max-width: 1024px) {.col-3 {width:40%} .col-9 {width:60%}}
-    @media only screen and (max-width: 900px) { .col-3 {width:40%} .col-9 {width:60%} .grid {margin-left: 50px; margin-right : 50px;}}
-    @media only screen and (max-width: 750px) {.col-3 {width:45%} .col-9 {width:55%} .grid {margin-left: 20px; margin-right; 20px;} #map-canvas {height: 350px;} #menu li {line-height: 30px; min-height: 30px; min-width: 40px;} #menu li a {font-style: normal; line-height: 30px; min-width: 40px; text-align: center;}}
-    @media only screen and (max-width: 600px) {.grid {margin-left: 0; margin-right: 0;} body {margin: 10px; padding: 0;}.col-3 {width:0%;} .col-9 {width:100%;} h1 {margin-top: 5px; margin-bottom: 5px;} #map-canvas {height: 250px;} ul {margin-top: 5px; margin-bottom: 10px;} #menu li {line-height: 30px; min-height: 30px;} #menu li a {font-size: large; font-style: normal;line-height: 30px; min-width: 30px; text-align: center;}
+    @media only screen and (max-width: 900px) { .col-3 {width:40%} .col-9 {width:60%}}
+    @media only screen and (max-width: 750px) {.col-3 {width:45%} .col-9 {width:55%}  #map-canvas {height: 350px;} #menu li {line-height: 30px; min-height: 30px; min-width: 40px;} #menu li a {font-style: normal; line-height: 30px; min-width: 40px; text-align: center;}}
+    @media only screen and (max-width: 600px) { body {margin: 10px; padding: 0;}.col-3 {width:0%;} .col-9 {width:100%;} h1 {margin-top: 5px; margin-bottom: 5px;} #map-canvas {height: 250px;} ul {margin-top: 5px; margin-bottom: 10px;} #menu li {line-height: 30px; min-height: 30px;} #menu li a {font-size: large; font-style: normal;line-height: 30px; min-width: 30px; text-align: center;}
  </style>
-  <!--<link href="css/style.css" rel="stylesheet">-->
 </head>
 <body>
   <div class="grid">
-  
     <div id="header">
       <h1>Marathon Map</h1>
     </div>
     <div id="menu">  
       <ul id="drop-nav" class="tier1">
-        <li class="cat"><a href="#" id="hospitality">1</a>
-          <ul class="tier2">
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('lodging'),closeInfoWindow(),recenterMap()}"><a href="#">Lodging</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('campground'),closeInfoWindow(),recenterMap()}"><a href="#">Camping</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('restaurant'),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li>           
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('cafe'),closeInfoWindow(),recenterMap()}"><a href="#">Cafes</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('meal_takeaway'),closeInfoWindow(),recenterMap()}"><a href="#">Fast Food</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('meal_delivery'),closeInfoWindow(),recenterMap()}"><a href="#">Delivery</a></li>
+        <li ><a href="#" id="hospitality">&#9789;</a>
+          <ul>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('lodging'),closeInfoWindow(),recenterMap()}"><a href="#">Lodging</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('campground'),closeInfoWindow(),recenterMap()}"><a href="#">Camping</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('restaurant'),closeInfoWindow(),recenterMap()}"><a href="#">Restaurants</a></li>           
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('cafe'),closeInfoWindow(),recenterMap()}"><a href="#">Cafes</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('meal_takeaway'),closeInfoWindow(),recenterMap()}"><a href="#">Fast Food</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('meal_delivery'),closeInfoWindow(),recenterMap()}"><a href="#">Delivery</a></li>
           </ul>
         </li>
-        <li class="cat"><a href="#" id="culture">2</a>
-          <ul class="tier2">    
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('place_of_worship'),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('school'),closeInfoWindow(),recenterMap()}"><a href="#">Schools</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('art_gallery'),closeInfoWindow(),recenterMap()}"><a href="#">Art Gallery</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('library'),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('museum'),closeInfoWindow(),recenterMap()}"><a href="#">Museum</a></li>
+        <li><a href="#" id="culture">&#9774;</a>
+          <ul>    
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('place_of_worship'),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('school'),closeInfoWindow(),recenterMap()}"><a href="#">Schools</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('art_gallery'),closeInfoWindow(),recenterMap()}"><a href="#">Art Gallery</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('library'),closeInfoWindow(),recenterMap()}"><a href="#">Library</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('museum'),closeInfoWindow(),recenterMap()}"><a href="#">Museum</a></li>
           </ul>
         </li>
-        <li class="cat"><a href="#" id="recreation">3</a>   
-          <ul class="tier2"> 
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('park'),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('movie_theater'),closeInfoWindow(),recenterMap()}"><a href="#">Movie Theater</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('aquarium'),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('bicycle_store'),closeInfoWindow(),recenterMap()}"><a href="#">Bike Rental</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('gym'),closeInfoWindow(),recenterMap()}"><a href="#">Gym</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('amusement_park'),closeInfoWindow(),recenterMap()}"><a href="#">Amusement Parks</a></li>
+        <li><a href="#" id="recreation">&#9786;</a>   
+          <ul> 
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('park'),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('movie_theater'),closeInfoWindow(),recenterMap()}"><a href="#">Movie Theater</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('aquarium'),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li>
+            <li data-bind="click: function(){emptyLocations(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('bicycle_store'),closeInfoWindow(),recenterMap()}"><a href="#">Bike Rental</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('gym'),closeInfoWindow(),recenterMap()}"><a href="#">Gym</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('amusement_park'),closeInfoWindow(),recenterMap()}"><a href="#">Amusement Parks</a></li>
           </ul>
         </li>
-        <li class="cat"><a href="#" id="government">4</a> 
-          <ul class="tier2">    
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('local_government_office'),closeInfoWindow(),recenterMap()}"><a href="#">Local Offices</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('post_office'),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('police'),closeInfoWindow(),recenterMap()}"><a href="#">Police</a></li>
+        <li><a href="#" id="government">&#10026;</a> 
+          <ul>    
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('local_government_office'),closeInfoWindow(),recenterMap()}"><a href="#">Local Offices</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('post_office'),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('police'),closeInfoWindow(),recenterMap()}"><a href="#">Police</a></li>
           </ul>
         </li>
-        <li class="cat"><a href="#" id="services">5</a>
-          <ul class="tier2"> 
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('doctor'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('dentist'),closeInfoWindow(),recenterMap()}"><a href="#">Dentists</a></li> 
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('bank'),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li>
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('bus_station'),closeInfoWindow(),recenterMap()}"><a href="#">Bus</a></li>            
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('car_rental'),closeInfoWindow(),recenterMap()}"><a href="#">Car Rental</a></li> 
-            <li class="sub" data-bind="click: function(){emptyLocations(), view.getLocations('convenience_store'),closeInfoWindow(),recenterMap()}"><a href="#">Convenience</a></li> 
+        <li><a href="#" id="services">&#36;</a>
+          <ul> 
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('doctor'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('dentist'),closeInfoWindow(),recenterMap()}"><a href="#">Dentists</a></li> 
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('bank'),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('bus_station'),closeInfoWindow(),recenterMap()}"><a href="#">Bus</a></li>            
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('car_rental'),closeInfoWindow(),recenterMap()}"><a href="#">Car Rental</a></li> 
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('convenience_store'),closeInfoWindow(),recenterMap()}"><a href="#">Convenience</a></li> 
           </ul>  
         </li>
       </ul>

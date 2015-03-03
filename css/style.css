@@ -192,6 +192,10 @@ h1 {
     width:60%
   }
 
+  .grid {
+  	margin: 0 auto;
+  }
+
 }
 
 @media only screen and (max-width: 900px) {	
@@ -202,11 +206,6 @@ h1 {
 
   .col-9 {
     width:60%
-  }
-
-  .grid {
-  	margin-left: 50px;
-  	margin-right : 50px;
   }
 
 }
@@ -221,10 +220,6 @@ h1 {
     width:55%
   }
 
-  .grid {
-  	margin-left: 20px;
-  	margin-right; 20px;
-  }
 
   #map-canvas {
 	height: 350px;
@@ -249,10 +244,6 @@ h1 {
 
 @media only screen and (max-width: 600px) {
 
-  .grid {
-  	margin-left: 0;
-  	margin-right: 0;
-  }
 
   body {
     margin: 10px;
