@@ -46,6 +46,8 @@ when using Marathon Map.
 - Thanks to Piotr Zalewa and Oskar Krawczyk for their JSFiddle "Observable with Google Map
    Marker," which was helpful in integrating Knockout.js with Google Maps API: 
 http://jsfiddle.net/gizzat/ADexG/
+- Thanks to the people at Google for their advice on optimizing CSS delivery, and for their 
+useful plug-in: https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery
 
 
 
