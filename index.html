@@ -91,7 +91,7 @@
           <input type="search" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
           <button type="button" data-bind="click: searchBox()"> Search </button>
         </form>
-        <button type="button" class="search" data-bind="click: recenterMap()">Recenter Map</button>
+        <button type="button" class="search" data-bind="click: function(){recenterMap()}">Recenter Map</button>
         <button type="button" class="search" data-bind="click: emptyLocations()">Clear Map</button>
       </div> 
     </div> <!--end of map-area-->

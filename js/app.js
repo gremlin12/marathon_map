@@ -36,9 +36,11 @@ var model = [
 // the lat/long coordinates.
 
 var map = new google.maps.Map(document.getElementById('map-canvas'), {
-        zoom: 13,
+        zoom: 12,
         center: {lat: 24.723009, lng: -81.038884}
     }); 
+
+//var marathon = new google.maps.LatLng(24.723009, -81.038884);
 
 // Define these variables globally for use in several functions.
 
@@ -48,6 +50,7 @@ var request;
 var service = new google.maps.places.PlacesService(map);
 var infowindow = new google.maps.InfoWindow();
 var infoWindowIsOpen = false;
+
 
 
 view = {
@@ -60,7 +63,7 @@ view = {
         var icons = ['&#9789;', '&#9774;', '&#9786;', '&#10026;', '&#36;'];
         var labels = ['Hospitality ', 'Culture ', 'Recreation ', 'Government ', 'Services '];
         for (i=0; i < categories.length; i++) {
-            if ($('#map-canvas').width() > 525)  {  
+            if ($('#map-canvas').width() > 570)  {  
                 $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] +'>' + labels[i] + '&#9660;' +'</a>' );
                 $('#' + categories[i] ).css('text-align', 'left');
             } else {
@@ -321,11 +324,8 @@ var viewModel = function() {
        is selected, or when the recenter-map button is clicked. */
 
     this.recenterMap = function() {
-        map.setOptions(
-            {
-                'center' : map.center,
-                'zoom' : 12
-            });       
+        map.setCenter(new google.maps.LatLng(24.723009, -81.038884) );
+        map.setOptions({ 'zoom' : 12 });       
         self.closeInfoWindow();
     };
  
@@ -435,4 +435,6 @@ var viewModel = function() {
 
 view.init();
 ko.applyBindings(viewModel());
-
+$( window ).resize(function() {
+  view.init();
+});
