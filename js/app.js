@@ -58,13 +58,13 @@ view = {
     init : function() {
         var categories = ['hospitality', 'culture', 'recreation', 'government', 'services'];
         var icons = ['&#9789;', '&#9774;', '&#9786;', '&#10026;', '&#36;'];
-        var labels = ['Hospitality', 'Culture', 'Recreation', 'Government', 'Services'];
+        var labels = ['Hospitality ', 'Culture ', 'Recreation ', 'Government ', 'Services '];
         for (i=0; i < categories.length; i++) {
             if ($('#map-canvas').width() > 525)  {  
-                $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] +'>' + labels[i] + '</a>' );
+                $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] +'>' + labels[i] + '&#9660;' +'</a>' );
                 $('#' + categories[i] ).css('text-align', 'left');
             } else {
-                $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] + '>' + icons[i] + '</a>' );  
+                $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] + '>' + icons[i]  + '</a>' );  
                 $('#' + categories[i] ).css('text-align', 'center');
                 $('#' + categories[i] ).css('line-height', '30px');
             } 

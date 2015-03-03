@@ -11,18 +11,15 @@
     .grid {margin: 0 auto;max-width: 1200px;width:100%} .row {width: 100%;margin-bottom:20px;display: flex;flex-wrap: wrap;}
     .col-3 {width:30%} .col-9 {width:70%}.col-12 {width:100%}
     #map-canvas {display: block; height: 400px; width: 100%; float: left;}
-    ul {padding:0;}
+    ul {padding:0;}  h1 {font-family: Courier, "Lucida Console", arial, monospace; }
     #menu ul {list-style: none; display:table; padding: 0px; margin: 0px;}
     #menu ul li {max-width: 160px; min-width: 50px; display: block; position: relative; float: left; border:1px solid #000; z-index: 99999;}
     #menu li ul {display: none;}
     #menu ul li a {display: block; background-color: #7887AB; padding: 5px 10px 5px 10px; text-decoration: none; text-align: left; white-space: nowrap; font-family: helvetica, sans-serif; font-size: 16px; color: #fff;}
     #menu ul li a:hover {background-color: #7887AB;}
-    #menu li:hover ul {display: block; position: absolute;}
-    #menu li:hover li {float: none;}
-    #menu li:hover a {background-color: #7887AB;}
-    #menu li:hover li a:hover {background-color: #669999;}
-    #drop-nav li ul li {border-top: 0px;}
-    .search {display: inline; position: relative;}
+    #menu li:hover ul {display: block; position: absolute;} #menu li:hover li {float: none;}
+    #menu li:hover a {background-color: #7887AB;} #menu li:hover li a:hover {background-color: #669999;}
+    #drop-nav li ul li {border-top: 0px;} .search {display: inline; position: relative;}
     @media only screen and (max-width: 1024px) {.col-3 {width:40%} .col-9 {width:60%}}
     @media only screen and (max-width: 900px) { .col-3 {width:40%} .col-9 {width:60%}}
     @media only screen and (max-width: 750px) {.col-3 {width:45%} .col-9 {width:55%}  #map-canvas {height: 350px;} #menu li {line-height: 30px; min-height: 30px; min-width: 40px;} #menu li a {font-style: normal; line-height: 30px; min-width: 40px; text-align: center;}}
@@ -35,8 +32,8 @@
       <h1>Marathon Map</h1>
     </div>
     <div id="menu">  
-      <ul id="drop-nav" class="tier1">
-        <li ><a href="#" id="hospitality">&#9789;</a>
+      <ul id="drop-nav">
+        <li ><a href="#" id="hospitality">&#9660;</a>
           <ul>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('lodging'),closeInfoWindow(),recenterMap()}"><a href="#">Lodging</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('campground'),closeInfoWindow(),recenterMap()}"><a href="#">Camping</a></li>
@@ -46,7 +43,7 @@
             <li data-bind="click: function(){emptyLocations(), view.getLocations('meal_delivery'),closeInfoWindow(),recenterMap()}"><a href="#">Delivery</a></li>
           </ul>
         </li>
-        <li><a href="#" id="culture">&#9774;</a>
+        <li><a href="#" id="culture">&#9660;</a>
           <ul>    
             <li data-bind="click: function(){emptyLocations(), view.getLocations('place_of_worship'),closeInfoWindow(),recenterMap()}"><a href="#">Places of Worship</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('school'),closeInfoWindow(),recenterMap()}"><a href="#">Schools</a></li>
@@ -55,7 +52,7 @@
             <li data-bind="click: function(){emptyLocations(), view.getLocations('museum'),closeInfoWindow(),recenterMap()}"><a href="#">Museum</a></li>
           </ul>
         </li>
-        <li><a href="#" id="recreation">&#9786;</a>   
+        <li><a href="#" id="recreation">&#9660;</a>   
           <ul> 
             <li data-bind="click: function(){emptyLocations(), view.getLocations('park'),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('movie_theater'),closeInfoWindow(),recenterMap()}"><a href="#">Movie Theater</a></li>
@@ -66,21 +63,21 @@
             <li data-bind="click: function(){emptyLocations(), view.getLocations('amusement_park'),closeInfoWindow(),recenterMap()}"><a href="#">Amusement Parks</a></li>
           </ul>
         </li>
-        <li><a href="#" id="government">&#10026;</a> 
+        <li><a href="#" id="government">&#9660;</a> 
           <ul>    
             <li data-bind="click: function(){emptyLocations(), view.getLocations('local_government_office'),closeInfoWindow(),recenterMap()}"><a href="#">Local Offices</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('post_office'),closeInfoWindow(),recenterMap()}"><a href="#">Post Office</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('police'),closeInfoWindow(),recenterMap()}"><a href="#">Police</a></li>
           </ul>
         </li>
-        <li><a href="#" id="services">&#36;</a>
+        <li><a href="#" id="services">&#9660;</a>
           <ul> 
             <li data-bind="click: function(){emptyLocations(), view.getLocations('doctor'),closeInfoWindow(),recenterMap()}"><a href="#">Doctors</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('dentist'),closeInfoWindow(),recenterMap()}"><a href="#">Dentists</a></li> 
             <li data-bind="click: function(){emptyLocations(), view.getLocations('bank'),closeInfoWindow(),recenterMap()}"><a href="#">Banks</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('bus_station'),closeInfoWindow(),recenterMap()}"><a href="#">Bus</a></li>            
             <li data-bind="click: function(){emptyLocations(), view.getLocations('car_rental'),closeInfoWindow(),recenterMap()}"><a href="#">Car Rental</a></li> 
-            <li data-bind="click: function(){emptyLocations(), view.getLocations('convenience_store'),closeInfoWindow(),recenterMap()}"><a href="#">Convenience</a></li> 
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('convenience_store'),closeInfoWindow(),recenterMap()}"><a href="#">Food Mart</a></li> 
           </ul>  
         </li>
       </ul>
@@ -110,15 +107,14 @@
   </div> <!-- end of row -->
   </div> <!-- end of grid -->
 
-  <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UpkOItdYcObCcD9-pQ2tGBAkm7XjOPI"></script>-->
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UpkOItdYcObCcD9-pQ2tGBAkm7XjOPI&libraries=places"></script>
   <script async src="js/knockout-3.2.0.js"></script>
   <script src="js/jquery-1.11.2.min.js"></script>
-  <script async src="js/app5.js"></script> 
+  <script async src="js/app.min.js"></script> 
   <script>
       var cb = function() {
         var l = document.createElement('link'); l.rel = 'stylesheet';
-        l.href = 'css/style.css';
+        l.href = 'css/style.min.css';
         var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
       };
       var raf = requestAnimationFrame || mozRequestAnimationFrame ||
