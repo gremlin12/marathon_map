@@ -33,7 +33,8 @@ To see a live demo of the map, visit http://gremlin12.github.io/marathon_map/
    must type the entire name.)
 
 ** Caveats **
-The application relies on the Google Maps API and Google Places Library for its content.
+   
+   The application relies on the Google Maps API and Google Places Library for its content.
 Google's algorithms are not infallible and can occasionally return information that is 
 incomplete, misleading, or wrong. For example, a city park may appear to be at city 
 hall instead of at its actual physical location. Or you may see duplicate markers
