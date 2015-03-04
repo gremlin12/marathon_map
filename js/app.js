@@ -34,15 +34,17 @@ var model = [
 /* Google Map View */
 
 
-// Set up Google Map. To customize for a different city or region, change 
-// the lat/long coordinates.
+// Set up Google Map. Define these variables globally for use in several functions.
 
 var map = new google.maps.Map(document.getElementById('map-canvas'), {
         zoom: 12,
-        center: {lat: 24.723009, lng: -81.038884}
+        center: mapCenter//{lat: 24.723009, lng: -81.038884}
     }); 
 
-// Define these variables globally for use in several functions.
+//To customize for a different city or neighborhood, change these lat/long coordinates.
+//var mapCenter = new google.maps.LatLng(24.723009, -81.038884);
+var mapCenter = new google.maps.LatLng(52.366667, 4.9);
+
 
 var markers = [];
 var marker;
@@ -325,7 +327,7 @@ var viewModel = function() {
        is selected, or when the recenter-map button is clicked. */
 
     this.recenterMap = function() {
-        map.setCenter(new google.maps.LatLng(24.723009, -81.038884) );
+        map.setCenter(mapCenter);
         map.setOptions({ 'zoom' : 12 });       
         self.closeInfoWindow();
     };
