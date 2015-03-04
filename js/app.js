@@ -42,8 +42,8 @@ var map = new google.maps.Map(document.getElementById('map-canvas'), {
     }); 
 
 //To customize for a different city or neighborhood, change these lat/long coordinates.
-//var mapCenter = new google.maps.LatLng(24.723009, -81.038884);
-var mapCenter = new google.maps.LatLng(52.366667, 4.9);
+var mapCenter = new google.maps.LatLng(24.723009, -81.038884);
+//var mapCenter = new google.maps.LatLng(52.366667, 4.9);
 
 
 var markers = [];
