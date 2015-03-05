@@ -378,7 +378,6 @@ var viewModel = function() {
 
     // Clear the search box.
     this.clearSearchBox = function() {
-    	console.log('something');
     	$('#autocomplete').val('');
     }
 
