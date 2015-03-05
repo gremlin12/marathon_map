@@ -10,7 +10,7 @@ var model = [
         name : 'Sombrero Beach',
         lat : 24.691533,
         long : -81.086107,
-        cat : ['beaches','parks'],
+        cat : ['beaches','park'],
         imgUrl : '',
         address : 'Sombrero Beach Rd., Marathon',
         placeid : '001',
@@ -21,10 +21,21 @@ var model = [
         name : 'Coco Plum Beach',
         lat : 24.730240,
         long : -81.001592,
-        cat : ['beaches', 'parks'],
+        cat : ['beaches', 'park'],
         imgUrl : '',
         address : 'Coco Plum Dr., Marathon',
         placeid : '002',
+        website : 'http://www.ci.marathon.fl.us/government/parks/city-parks-and-beaches/',
+        phoneNumber : '(305) 743-0033'
+     },
+     {
+        name : 'Jesse Hobbs Park',
+        lat : 24.713604,
+        long : -81.087036,
+        cat : ['park'],
+        imgUrl : '',
+        address : '41st St. and Overseas Hwy, Marathon',
+        placeid : '003',
         website : 'http://www.ci.marathon.fl.us/government/parks/city-parks-and-beaches/',
         phoneNumber : '(305) 743-0033'
      }
@@ -34,16 +45,15 @@ var model = [
 /* Google Map View */
 
 
-// Set up Google Map. Define these variables globally for use in several functions.
+// Define these variables globally for use in several functions.
 
 var map = new google.maps.Map(document.getElementById('map-canvas'), {
         zoom: 12,
-        center: mapCenter//{lat: 24.723009, lng: -81.038884}
+        center: mapCenter
     }); 
 
 //To customize for a different city or neighborhood, change these lat/long coordinates.
 var mapCenter = new google.maps.LatLng(24.723009, -81.038884);
-//var mapCenter = new google.maps.LatLng(52.366667, 4.9);
 
 
 var markers = [];
@@ -53,6 +63,14 @@ var service = new google.maps.places.PlacesService(map);
 var infowindow = new google.maps.InfoWindow();
 var infoWindowIsOpen = false;
 
+// Sometimes Google Places returns duplicate locations or locations that no longer exist.
+// Their place-ids are added manually to the badId array, which will be used by the 
+// createMarker() function to prevent duplicates from a appearing on the map.
+var badID = ['ChIJ40NtAb_e0IgRXF3FSvPYdPU','ChIJR2JaoIDZ0IgRVYFo3Et9jGY','ChIJh72I2H_Z0IgRc_2GCzQ4ojA', 'ChIJ0x-jPCra0IgRPj4_dJeO8Jc','ChIJyX_gNmPZ0IgR8Vq2WN5q3m4', 'ChIJV2D-j07Z0IgRnFu34GH4Jfg','ChIJifxZz0zZ0IgR_KJsoTes2fU', 'ChIJOW7ImUTZ0IgRwK52f_32ivU', 'ChIJQbj4sOre0IgRIa8HNNSYAbA', 'ChIJ8ZtRVZXe0IgRc7VP0JUYXTk', 'ChIJlytLLbHe0IgRnsMbhZIyrto','ChIJl3iw0bne0IgRiepETBQaOxQ'];
+
+// The availableTags array keeps a list of all location-names that are added to the model. 
+// It serves as a data-pool for the jQuery-UI Autocomplete widget.
+var availableTags = [];
 
 view = {
 
@@ -77,6 +95,7 @@ view = {
     
     // Send a Places Search request to Google when a category tab is clicked in navigation menu. 
     getLocations : function (category) {
+    	
         var request = {
             location: map.center,
             radius: '20000',
@@ -90,8 +109,8 @@ view = {
         function callback(results, status) {  
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 for (var i = 0; i < results.length; i++) {
-                    var place = results[i];
-                    createMarker(results[i]);
+                    var place = results[i];                    
+                    createMarker(results[i]);                  
                 }
             }
         }
@@ -121,23 +140,26 @@ view = {
               the markers array, but it is ko.observable and needed to make the model-view-viewModel 
               system work. */
 
-            locations.push(new Location(name,lat,long,cat,address,imgUrl,placeid));
+            if (jQuery.inArray(placeid, badID) === -1) {  
+                locations.push(new Location(name,lat,long,cat,address,imgUrl,placeid));           
 
             /* Place details are also added to the model. This makes it possible to search
              for locations after the markers have been removed from the map. It also allows for 
              custom locations to be created independently of Google's API. */
 
-            var obj = {
-                name : name,
-                lat : lat,
-                long : long,
-                cat : cat,
-                address : address,
-                imgUrl : imgUrl,
-                placeid : placeid
-            }
+                var obj = {
+                    name : name,
+                    lat : lat,
+                    long : long,
+                    cat : cat,
+                    address : address,
+                    imgUrl : imgUrl,
+                    placeid : placeid
+                }
 
-            model.push(obj);
+                model.push(obj);
+                autoComplete();
+            }
         }  
     },
 
@@ -240,6 +262,7 @@ view = {
             }
         }
     }
+
 }
 
 
@@ -294,7 +317,8 @@ var viewModel = function() {
         for (var place in model) {
             for(i=0; i < model[place].cat.length; i++) {
                 if (model[place].cat[i] ===category) {
-                    locations.push(new Location(model[place].name, model[place].lat, model[place].long, model[place].cat, model[place].address, model[place].imgUrl, model[place].placeid));  
+                    locations.push(new Location(model[place].name, model[place].lat, model[place].long, model[place].cat, model[place].address, model[place].imgUrl, model[place].placeid)); 
+                    self.autoComplete; 
                 }
             }           
         }    
@@ -337,7 +361,7 @@ var viewModel = function() {
        on the map are saved in the model, the user can search for a specific location 
        even after its marker has been cleared from the map.*/
     
-    this.searchBox = function(query) {
+    this.searchBox = function(query) {   	
         var search = this.query().toLowerCase();
         for (place in model) {
             if (model[place].name.toLowerCase() === search) {
@@ -347,8 +371,23 @@ var viewModel = function() {
         }
         self.closeInfoWindow();
         this.recenterMap();
+    };
 
-    }; 
+    // Clear the search box.
+    this.clearSearchBox = function() {
+    	console.log('something');
+    	$('#autocomplete').val('');
+    }
+
+    // Push location names from the model into the availableTags array,
+    // which is used by the jQuery-UI Autocomplete widget 
+    this.autoComplete = function() {
+    	for (place in model) {
+    		if (jQuery.inArray(model[place].name, availableTags) === -1) { 
+    		    availableTags.push(model[place].name);
+    		}    
+    	}
+    };
     
     // Close the infoWindow.
 
@@ -443,3 +482,8 @@ ko.applyBindings(viewModel());
 $( window ).resize(function() {
   view.init();
 });
+
+$( "#autocomplete" ).autocomplete({
+	source: availableTags
+});
+

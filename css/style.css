@@ -125,6 +125,16 @@ ul {
   position: relative;
 }
 
+a.search {
+	color: blue;
+	text-decoration: none;
+} 
+
+a.search:hover   {
+	color: red;
+	text-decoration: none;
+}
+
 /* Results Display */
 
 #results-display {

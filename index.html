@@ -25,6 +25,7 @@
     @media only screen and (max-width: 750px) {.col-3 {width:45%} .col-9 {width:55%}  #map-canvas {height: 350px;} #menu li {line-height: 30px; min-height: 30px; min-width: 40px;} #menu li a {font-style: normal; line-height: 30px; min-width: 40px; text-align: center;} }
     @media only screen and (max-width: 600px) { body {margin: 10px; padding: 0;}.col-3 {width:0%;} .col-9 {width:100%;} #menu li a {font-size: large; min-width: 30px;}}
  </style>
+ <link href="css/jquery-ui.min.css" rel="stylesheet">
 </head>
 <body>
   <div class="grid">
@@ -54,7 +55,7 @@
         </li>
         <li><a href="#" id="recreation">&#9660;</a>   
           <ul> 
-            <li data-bind="click: function(){emptyLocations(), view.getLocations('park'),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li>
+            <li data-bind="click: function(){emptyLocations(), view.getLocations('park'), getPlaces('park'),closeInfoWindow(),recenterMap()}"><a href="#">Parks</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('movie_theater'),closeInfoWindow(),recenterMap()}"><a href="#">Movie Theater</a></li>
             <li data-bind="click: function(){emptyLocations(), view.getLocations('aquarium'),closeInfoWindow(),recenterMap()}"><a href="#">Aquarium</a></li>
             <li data-bind="click: function(){emptyLocations(), getPlaces('beaches'),closeInfoWindow(),recenterMap()}"><a href="#">Beaches</a></li>
@@ -88,11 +89,12 @@
       <div id="map-canvas"></div>
       <div id="searchbar">
         <form class="search">
-          <input type="search" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
-          <button type="button" data-bind="click: searchBox()"> Search </button>
+          <input type="text" id="autocomplete" title="type &quot;a&quot;" data-bind="value: query, valueUpdate: ['blur'], event: {click: autoComplete()}" autocomplete="on">
+          <p class="search"><a class="search" href='#' data-bind="click: clearSearchBox()">&cross;</a></p>
+          <button class="search" type="button" data-bind="click: searchBox()"> Search </button>
         </form>
         <button type="button" class="search" data-bind="click: function(){recenterMap()}">Recenter Map</button>
-        <button type="button" class="search" data-bind="click: emptyLocations()">Clear Map</button>
+        <button type="button" class="search" data-bind="click: function() {emptyLocations(), clearSearchBox()}">Clear Map</button>
       </div> 
     </div> <!--end of map-area-->
   
@@ -110,6 +112,7 @@
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UpkOItdYcObCcD9-pQ2tGBAkm7XjOPI&libraries=places"></script>
   <script async src="js/knockout-3.2.0.js"></script>
   <script src="js/jquery-1.11.2.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
   <script async src="js/app.min.js"></script> 
   <script>
       var cb = function() {
