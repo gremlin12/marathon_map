@@ -28,8 +28,21 @@ To see a live demo of the map, visit http://gremlin12.github.io/marathon_map/
    7. Click on a marker or a location name to open an information window with basic details
    about the place.
    8. Once a location has been rezzed on the map, its details are saved. To retrieve the
-   location, type its name in the search bar and click the search button. (You
-   must type the entire name.)
+   location, type its name in the search bar and click the search button. 
+   
+** How to Customize for Your Neighborhood **
+    1. In the head section of index.html, change the title tag: <title>[name of your town]</title>
+    2. In the body section, change the heading: <h1>[name of your town]</h1>
+    3. Remove or comment out the "beaches" list-item in the navigation menu.
+    4. Open the app.js file and remove any Marathon location objects from the model. Add
+    custom locations for your own town, if you wish.
+    6. Locate the mapcenter variable a few lines down from the model and change
+    the latitude and longitude coordinates:
+    var mapCenter = new google.maps.LatLng([your latitude], [your longitude]);
+    7. Remove all place-IDs from the BadID array. 
+    8. Make a minimized copy of your customized app.js file and save it as app.min.js
+    in the js folder, replacing the old one. 
+    9. That's it!
 
 ** Caveats **
    
@@ -37,8 +50,10 @@ This application relies on the Google Maps API and Google Places Library for its
 Google's algorithms are not infallible and can occasionally return information that is 
 incomplete, misleading, or wrong. For example, a city park may appear to be at city 
 hall instead of at its actual physical location. Or you may see duplicate markers
-for the same school or business.  Please be mindful of the technology's limitations
-when using Marathon Map.
+for the same school or business.  To correct this problem, place-IDs for duplicate 
+or incorrect locations can be filtered out by placing them manually in the badID array 
+in app.js. 
+
 
 ** Acknowledgements **
 
