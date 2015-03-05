@@ -39,9 +39,9 @@ To see a live demo of the map, visit http://gremlin12.github.io/marathon_map/
     3. Remove or comment out the "beaches" list-item in the navigation menu div:
          <!--<li ... ><a href="#">Beaches</a></li>-->
     4. Open the app.js file and remove any Marathon location objects from the model. Add
-    custom locations for your own town, if you wish.
+       custom locations of your own town, if you wish.
     6. Locate the mapcenter variable a few lines down from the model and change
-    the latitude and longitude coordinates:
+       the latitude and longitude coordinates:
          var mapCenter = new google.maps.LatLng([your latitude], [your longitude]);
     7. Remove all place-IDs from the BadID array. 
     8. Make a minimized copy of your customized app.js file and save it as app.min.js
