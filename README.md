@@ -32,24 +32,19 @@ To see a live demo of the map, visit http://gremlin12.github.io/marathon_map/
    
 ** How to Customize for Your Neighborhood **
 
-    1. In the head section of index.html, change the title tag: &lt;title&gt;[name of your town]&lt;/title&gt;
-    
-    2. In the body section, change the heading: &lt;h1&gt;[name of your town]&lt;/h1&gt;
-    
+    1. In the head section of index.html, change the title tag: 
+         <title>[name of your town]</title>
+    2. In the body section, change the heading: 
+         <h1>[name of your town]</h1>
     3. Remove or comment out the "beaches" list-item in the navigation menu.
-    
     4. Open the app.js file and remove any Marathon location objects from the model. Add
     custom locations for your own town, if you wish.
-    
     6. Locate the mapcenter variable a few lines down from the model and change
     the latitude and longitude coordinates:
-    var mapCenter = new google.maps.LatLng([your latitude], [your longitude]);
-    
+         var mapCenter = new google.maps.LatLng([your latitude], [your longitude]);
     7. Remove all place-IDs from the BadID array. 
-    
     8. Make a minimized copy of your customized app.js file and save it as app.min.js
     in the js folder, replacing the old one. 
-    
     9. That's it!
 
 ** Caveats **
