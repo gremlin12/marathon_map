@@ -36,7 +36,8 @@ To see a live demo of the map, visit http://gremlin12.github.io/marathon_map/
          <title>[name of your town]</title>
     2. In the body section, change the heading: 
          <h1>[name of your town]</h1>
-    3. Remove or comment out the "beaches" list-item in the navigation menu.
+    3. Remove or comment out the "beaches" list-item in the navigation "menu" div:
+         <!--<li ... ><a href="#">Beaches</a></li>-->
     4. Open the app.js file and remove any Marathon location objects from the model. Add
     custom locations for your own town, if you wish.
     6. Locate the mapcenter variable a few lines down from the model and change
