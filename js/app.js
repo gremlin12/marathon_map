@@ -38,6 +38,17 @@ var model = [
         placeid : '003',
         website : 'http://www.ci.marathon.fl.us/government/parks/city-parks-and-beaches/',
         phoneNumber : '(305) 743-0033'
+     },
+     {
+        name : 'Building Department',
+        lat : 24.711935,
+        long : -81.09753899999998,
+        cat : ['local_government_office'],
+        imgUrl : '',
+        address : '2798 Overseas Hwy., Suite 330',
+        placeid : '004',
+        website : 'http://www.monroecounty-fl.gov/Directory.aspx?did=6',
+        phoneNumber : '(305) 289-2501'
      }
 ];
 
@@ -488,4 +499,5 @@ $( window ).resize(function() {
 $( "#autocomplete" ).autocomplete({
 	source: availableTags
 });
+
 
