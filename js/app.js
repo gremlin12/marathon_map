@@ -76,7 +76,7 @@ var infoWindowIsOpen = false;
 
 // Sometimes Google Places returns duplicate locations or locations that no longer exist.
 // Their place-ids are added manually to the badId array, which will be used by the 
-// createMarker() function to prevent duplicates from a appearing on the map.
+// createMarker() function to prevent duplicates from appearing on the map.
 var badID = ['ChIJ40NtAb_e0IgRXF3FSvPYdPU','ChIJR2JaoIDZ0IgRVYFo3Et9jGY','ChIJh72I2H_Z0IgRc_2GCzQ4ojA',
  'ChIJ0x-jPCra0IgRPj4_dJeO8Jc','ChIJyX_gNmPZ0IgR8Vq2WN5q3m4', 'ChIJV2D-j07Z0IgRnFu34GH4Jfg',
  'ChIJifxZz0zZ0IgR_KJsoTes2fU', 'ChIJOW7ImUTZ0IgRwK52f_32ivU', 'ChIJQbj4sOre0IgRIa8HNNSYAbA',
