@@ -97,7 +97,7 @@ view = {
         var labels = ['Hospitality ', 'Culture ', 'Recreation ', 'Government ', 'Services '];
         for (i=0; i < categories.length; i++) {
             if ($('#map-canvas').width() > 570)  {  
-                $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] +'>' + labels[i] + '&#9660;' +'</a>' );
+                $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] +'>' + labels[i] + '&#8964;' +'</a>' );
                 $('#' + categories[i] ).css('text-align', 'left');
             } else {
                 $( '#' + categories[i] ).replaceWith( '<a href="#" id=' + categories[i] + '>' + icons[i]  + '</a>' );  
