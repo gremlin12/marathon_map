@@ -169,7 +169,7 @@ view = {
                     address : address,
                     imgUrl : imgUrl,
                     placeid : placeid
-                }
+                };
 
                 model.push(obj);
                 autoComplete();

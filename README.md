@@ -61,12 +61,12 @@ in app.js.
 
 ** Acknowledgements **
 
-- The drop-down navigation menu is adapted from James Richardson's tutorial at http://www.inmotionhosting.com/support/edu/website-design/using-css/simple-css-drop-down-menu 
+- The drop-down navigation menu is adapted from James Richardson's tutorial at 
+http://www.inmotionhosting.com/support/edu/website-design/using-css/simple-css-drop-down-menu 
 - Thanks to Piotr Zalewa and Oskar Krawczyk for their JSFiddle "Observable with Google Map
    Marker," which was helpful in integrating Knockout.js with Google Maps API: 
 http://jsfiddle.net/gizzat/ADexG/
-- Thanks to the people at Google for their advice on optimizing CSS delivery, and for their 
-useful plug-in: https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery
+
 
 
 

@@ -5,27 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Marathon Map</title>
-  <style>
-    body {height: 100%;padding: 0;}
-    * {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;box-sizing: border-box;}
-    .grid {margin: 0 auto;max-width: 1200px;width:100%} .row {width: 100%;margin-bottom:20px;display: flex;flex-wrap: wrap;}
-    .col-3 {width:30%} .col-9 {width:70%}.col-12 {width:100%}
-    #map-canvas {display: block; height: 400px; width: 100%; float: left;}
-    ul {padding:0;}  h1 {font-family: Courier, "Lucida Console", arial, monospace; }
-    #menu ul {list-style: none; display:table; padding: 0px; margin: 0px;}
-    #menu ul li {max-width: 160px; min-width: 50px; display: block; position: relative; float: left; border:1px solid #000; z-index: 99999;}
-    #menu li ul {display: none;}
-    #menu ul li a {display: block; background-color: #7887AB; padding: 5px 10px 5px 10px; text-decoration: none; text-align: left; white-space: nowrap; font-family: helvetica, sans-serif; font-size: 16px; color: #fff;}
-    #menu ul li a:hover {background-color: #7887AB;}
-    #menu li:hover ul {display: block; position: absolute;} #menu li:hover li {float: none;}
-    #menu li:hover a {background-color: #7887AB;} #menu li:hover li a:hover {background-color: #669999;}
-    #drop-nav li ul li {border-top: 0px;} .search {display: inline; position: relative;}  
-    @media only screen and (max-width: 1024px) {.col-3 {width:40%} .col-9 {width:60%}}
-    @media only screen and (max-width: 900px) { .col-3 {width:40%} .col-9 {width:60%} h1 {margin-top: 5px;margin-bottom: 5px;}}
-    @media only screen and (max-width: 750px) {.col-3 {width:45%} .col-9 {width:55%}  #map-canvas {height: 350px;} #menu li {line-height: 30px; min-height: 30px; min-width: 40px;} #menu li a {font-style: normal; line-height: 30px; min-width: 40px; text-align: center;} }
-    @media only screen and (max-width: 600px) { body {margin: 10px; padding: 0;}.col-3 {width:0%;} .col-9 {width:100%;} #menu li a {font-size: large; min-width: 30px;}}
- </style>
  <link href="css/jquery-ui.min.css" rel="stylesheet">
+ <link href="css/style.min.css" rel="stylesheet">
 </head>
 <body>
   <div class="grid">
@@ -114,18 +95,6 @@
   <script src="js/jquery-1.11.2.min.js"></script>
   <script src="js/jquery-ui.min.js"></script>
   <script async src="js/app.min.js"></script> 
-  <script>
-      var cb = function() {
-        var l = document.createElement('link'); l.rel = 'stylesheet';
-        l.href = 'css/style.min.css';
-        var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
-      };
-      var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-          webkitRequestAnimationFrame || msRequestAnimationFrame;
-      if (raf) raf(cb);
-      else window.addEventListener('load', cb);
-  </script>
-
 
 </body>
 </html>
